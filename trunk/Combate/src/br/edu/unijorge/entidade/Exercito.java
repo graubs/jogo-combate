@@ -29,6 +29,10 @@ public class Exercito {
         return (this.nome.equals(EXERCITO_AZUL) ? Color.BLUE : Color.RED);
     }
 
+    public String getCorExercito(){
+        return (this.nome.equals(EXERCITO_AZUL) ? EXERCITO_AZUL : EXERCITO_VERMELHO);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Exercito)){

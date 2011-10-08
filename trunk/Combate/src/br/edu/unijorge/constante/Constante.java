@@ -20,6 +20,9 @@ public abstract class Constante {
     public static final int ALTURA_DIALOG = 400;
 
     //Imagens utilizadas pela aplicação
+    public static final String PATH_IMAGENS = "/br/edu/unijorge/imagens/";
+    public static final String EXTENSAO_IMAGEM = ".png";
     public static final String IMAGEM_FUNDO_TABULEIRO = "/br/edu/unijorge/imagens/Terreno-Combate.png";
+    public static final String IMAGEM_ESPIAO_AZUL = "/br/edu/unijorge/imagens/azul-1-espiao.png";
 
 }
