@@ -5,9 +5,12 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.BevelBorder;
@@ -17,15 +20,14 @@ import javax.swing.border.BevelBorder;
  *
  * @author Glauber
  */
-public abstract class Peca extends JToggleButton implements MouseListener{
+public abstract class Peca extends JToggleButton implements MouseListener {
 
-    public static final int
-            LARGURA = 63, //Largura padrão do componente
+    public static final int LARGURA = 63, //Largura padrão do componente
             ALTURA = 63; //Altura padrão do componente
-    
     private Exercito exercito;
     private int valor;
     private String titulo;
+    //private boolean enabled;
 
     //Construtor da classe
     public Peca(Exercito exercito, String titulo, int valor) {
@@ -33,12 +35,38 @@ public abstract class Peca extends JToggleButton implements MouseListener{
         this.exercito = exercito;
         this.titulo = titulo;
         this.valor = valor;
-        setText(getDescricao());
-        setFont(new Font(Constante.FONTE_TIPO_PADRAO, Constante.FONTE_ESTILO_PADRAO, Constante.FONTE_TAMANHO_PADRAO));
-        setBackground(exercito.getColor());
+        //this.enabled = true;
+        //setText(getDescricao());
+        //setFont(new Font(Constante.FONTE_TIPO_PADRAO, Constante.FONTE_ESTILO_PADRAO, Constante.FONTE_TAMANHO_PADRAO));
+        //setBackground(exercito.getColor());
         setPreferredSize(new Dimension(LARGURA, ALTURA));
         setBorder(new BevelBorder(BevelBorder.RAISED));
         addMouseListener(this);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        if (isEnabled()) {
+            super.paintComponent(g);
+
+            try {
+                Image i = (new ImageIcon(getClass().getResource(
+                        Constante.PATH_IMAGENS
+                        + getExercito().getCorExercito() + "-"
+                        + getTitulo() + Constante.EXTENSAO_IMAGEM))).getImage();
+
+                g.drawImage(i, 0, 0, this.getWidth(), this.getHeight(), this);
+            }catch(NullPointerException ex){
+                System.out.println(Constante.PATH_IMAGENS
+                        + getExercito().getCorExercito() + "-"
+                        + getTitulo() + Constante.EXTENSAO_IMAGEM);
+                ex.printStackTrace();
+            }
+
+        } else {
+            super.paintComponent(g);
+            setOpaque(true);
+        }
     }
 
     /**
@@ -132,6 +160,13 @@ public abstract class Peca extends JToggleButton implements MouseListener{
         this.titulo = titulo;
     }
 
+//    public boolean isEnabled() {
+//        return this.enabled;
+//    }
+//
+//    public void setEnabled(boolean enabled) {
+//        this.enabled = enabled;
+//    }
     /**
      * Retorna uma descrição da peça. Essa descrição é composta pelo título
      * da peça (Sargento, General, Capitão, etc) concatenado com o seu valor
@@ -139,10 +174,9 @@ public abstract class Peca extends JToggleButton implements MouseListener{
      * componente
      * @return Uma <code>String</code> com a descrição da peça
      */
-    public String getDescricao(){
+    public String getDescricao() {
         return this.titulo + "\r\n" + "(" + this.valor + ")";
     }
-
     /**
      * Classe interna que implementa a Interface <code>MouseListener</code>.
      * Captura os eventos de mouse e executa as implementações necessárias.
