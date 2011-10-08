@@ -1,49 +1,59 @@
 package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.constante.Constante;
-import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JLayeredPane;
+import java.awt.event.MouseEvent;
 import javax.swing.JToggleButton;
 import javax.swing.border.BevelBorder;
 
 /**
  * Abstrai a peça (peão) do jogo. Possui características como Exército, Título e Valor.
+ * Obriga as sub-classes a implementar o método mouseReleased da Interface <code>MouseListener</code>.
  *
  * @author Glauber
  */
-public abstract class Peca extends JToggleButton implements MouseListener{
+public abstract class Peca extends JToggleButton {
 
-    public static final int
-            LARGURA = 63, //Largura padrão do componente
-            ALTURA = 63; //Altura padrão do componente
-    
+    public static final int LARGURA = 60, //Largura padrão do componente
+            ALTURA = 60; //Altura padrão do componente
     private Exercito exercito;
     private int valor;
+    private String id;
     private String titulo;
 
     //Construtor da classe
-    public Peca(Exercito exercito, String titulo, int valor) {
+    public Peca(Exercito exercito, String titulo, int valor, String id) {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.exercito = exercito;
         this.titulo = titulo;
         this.valor = valor;
+        this.id = id;
         setText(getDescricao());
         setFont(new Font(Constante.FONTE_TIPO_PADRAO, Constante.FONTE_ESTILO_PADRAO, Constante.FONTE_TAMANHO_PADRAO));
         setBackground(exercito.getColor());
-        setPreferredSize(new Dimension(LARGURA, ALTURA));
+        //setBounds(0, 0, LARGURA, ALTURA);
+//        setPreferredSize(new Dimension(LARGURA, ALTURA));
+//        setMaximumSize(new Dimension(LARGURA, ALTURA));
+//        setMinimumSize(new Dimension(LARGURA, ALTURA));
         setBorder(new BevelBorder(BevelBorder.RAISED));
-        addMouseListener(this);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                pecaMouseReleased(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pecaMouseClicked(evt);
+            }
+        });
     }
 
     /**
      * Compara uma peca a outra (recebida no argumento). Para fazer isso, compara se o
-     * exército, título e valor são iguais.
+     * id (valor da peça concatenado com um id sequencial).
      * @param obj Object que será comparado com a instância dessa classe
      * @return <code>true</code> se as peças forem iguais, <code>false</code> caso contrário.
      */
@@ -53,15 +63,7 @@ public abstract class Peca extends JToggleButton implements MouseListener{
             return false;
         }
 
-        Peca peca = (Peca) obj;
-
-        if (this.exercito.equals(peca.getExercito())
-                && this.titulo.equals(peca.getTitulo())
-                && this.valor == peca.getValor()) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.id.equals(((Peca) obj).getId());
     }
 
     /**
@@ -69,40 +71,42 @@ public abstract class Peca extends JToggleButton implements MouseListener{
      * dessa peça.
      * @return Uma <code>List<Peca></code>
      */
-    private List<Peca> getTime() {
-        Component[] todasAsPecas = ((JLayeredPane) ((Component) this.getParent()).getParent()).getComponentsInLayer(Tabuleiro.LAYER_POSICAO);
-        List<Peca> pecasTime = new ArrayList<Peca>();
-
-        for (int i = 0; i < todasAsPecas.length; i++) {
-            Posicao pos = (Posicao) todasAsPecas[i];
-            if (pos.getComponentCount() > 0) {
-                Peca pca = (Peca) pos.getComponent(0);
-                if (pca.getExercito().equals(exercito)) {
-                    pecasTime.add(pca);
-                }
-            }
-        }
-
-        return pecasTime;
-    }
-
+//    private List<Peca> getTime() {
+//        Component[] todasAsPecas = ((JLayeredPane) ((Component) this.getParent()).getParent()).getComponentsInLayer(Tabuleiro.LAYER_POSICAO);
+//        List<Peca> pecasTime = new ArrayList<Peca>();
+//
+//        for (int i = 0; i < todasAsPecas.length; i++) {
+//            Posicao pos = (Posicao) todasAsPecas[i];
+//            if (pos.getComponentCount() > 0) {
+//                Peca pca = (Peca) pos.getComponent(0);
+//                if (pca.getExercito().equals(exercito)) {
+//                    pecasTime.add(pca);
+//                }
+//            }
+//        }
+//
+//        return pecasTime;
+//    }
     /**
-     * Método acionado no evento mouseReleased da Subclasse <code>MouseListenerImpl</code>.
+     * Método acionado no evento mouseReleased da implementação da Interface <code>MouseListener</code>.
      * Garante que somente uma peça (Classe que extende JToggleButton) será selecionada.
-     * @see MouseListenerImpl
      */
-    protected void garantirUnicidadeSelecao() {
-        List<Peca> pecas = getTime();
-
-        for (Peca p : pecas) {
-            if (p.equals(this)) {
-                ((JToggleButton) p).setSelected(true);
-            } else {
-                ((JToggleButton) p).setSelected(false);
-            }
-        }
-    }
-
+//    protected void garantirUnicidadeSelecao() {
+//        List<Peca> todasAsPecas = new ArrayList<Peca>();
+//        todasAsPecas.addAll(Tabuleiro.getInstance().getPecasTimeAzul());
+//        todasAsPecas.addAll(Tabuleiro.getInstance().getPecasTimeVerm());
+//
+//        for (Peca p : todasAsPecas) {
+//            Peca b = (Peca) p;
+//            if (p.equals(this)) {
+//                b.setSelected(true);
+//            } else {
+//                b.setSelected(false);
+//                
+//            }
+//        }
+//        repaint();
+//    }
     @Override
     public int hashCode() {
         int hash = 7;
@@ -132,6 +136,14 @@ public abstract class Peca extends JToggleButton implements MouseListener{
         this.titulo = titulo;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = this.valor + "-" + id;
+    }
+
     /**
      * Retorna uma descrição da peça. Essa descrição é composta pelo título
      * da peça (Sargento, General, Capitão, etc) concatenado com o seu valor
@@ -139,16 +151,16 @@ public abstract class Peca extends JToggleButton implements MouseListener{
      * componente
      * @return Uma <code>String</code> com a descrição da peça
      */
-    public String getDescricao(){
-        return this.titulo + "\r\n" + "(" + this.valor + ")";
+    public String getDescricao() {
+        return this.titulo + "(" + this.valor + ")";
     }
 
-    /**
-     * Classe interna que implementa a Interface <code>MouseListener</code>.
-     * Captura os eventos de mouse e executa as implementações necessárias.
-     */
-//    class MouseListenerImpl implements MouseListener {
-//
-//
-//    }
+    @Override
+    public String toString() {
+        return "Peça: " + getDescricao() + "Exército: " + getExercito().toString();
+    }
+
+    public abstract void pecaMouseReleased(MouseEvent evt);
+    
+    public abstract void pecaMouseClicked(MouseEvent evt);
 }
