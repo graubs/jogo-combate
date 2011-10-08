@@ -38,12 +38,18 @@ public abstract class UtilX {
                 ((getScreenHeight().intValue()) / 2) - (frame.getHeight() / 2));
     }
     
-    public static void centerChild(Component parent, Component child){
-        child.setLocation(
-                ((parent.getWidth() / 2) - (child.getWidth() / 2)) + parent.getLocation().x, 
-                ((parent.getHeight()/ 2) - (child.getHeight() / 2)) + parent.getLocation().y);
+    public static void centerX(Frame frame) {
+        frame.setLocation(
+                (getScreenWidth().intValue() / 2) - (frame.getWidth() / 2),
+                1);
     }
-    
+
+    public static void centerChild(Component parent, Component child) {
+        child.setLocation(
+                ((parent.getWidth() / 2) - (child.getWidth() / 2)) + parent.getLocation().x,
+                ((parent.getHeight() / 2) - (child.getHeight() / 2)) + parent.getLocation().y);
+    }
+
     public static String getTextoSemAcento(String texto) {
         String[] letrasA = new String[]{
             "Á", "É", "Í", "Ó", "Ú",
@@ -66,13 +72,13 @@ public abstract class UtilX {
             "A", "O",
             "a", "o",
             "_"};
-        
+
         String novoTexto = "";
-        
+
         for (int i = 0; i < texto.length(); i++) {
-            String letra = texto.substring(i, i+1);
-            for(int j = 0; j < letrasA.length; j++){
-                if(letra.equals(letrasA[j])){
+            String letra = texto.substring(i, i + 1);
+            for (int j = 0; j < letrasA.length; j++) {
+                if (letra.equals(letrasA[j])) {
                     letra = letrasS[j];
                 }
             }
@@ -80,8 +86,8 @@ public abstract class UtilX {
         }
         return novoTexto;
     }
-    
-    public static InetAddress getIpAddress(){
+
+    public static InetAddress getIpAddress() {
         InetAddress ip = null;
         try {
             ip = Inet4Address.getLocalHost();
@@ -90,9 +96,8 @@ public abstract class UtilX {
         }
         return ip;
     }
-    
-    public static void beep(){
+
+    public static void beep() {
         Toolkit.getDefaultToolkit().beep();
-    }
-    
+    }   
 }

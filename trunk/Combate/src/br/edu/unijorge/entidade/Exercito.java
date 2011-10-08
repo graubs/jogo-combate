@@ -48,7 +48,12 @@ public class Exercito {
         hash = 17 * hash + (this.nome != null ? this.nome.hashCode() : 0);
         return hash;
     }
-        
+
+    @Override
+    public String toString() {
+        return this.nome + " " + String.valueOf(this.id);
+    }
+            
     public long getId() {
         return id;
     }
