@@ -8,6 +8,7 @@ import br.edu.unijorge.exception.PecaException;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ public class Posicao extends JPanel implements MouseListener{
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
         setBorder(LineBorder.createBlackLineBorder());
+        setLayout(new GridLayout());
         addMouseListener(this);
     }
 
@@ -41,7 +43,6 @@ public class Posicao extends JPanel implements MouseListener{
         result = super.add(comp);
         comp.setLocation(0, 0);
         repaint();
-        //UtilX.centerChild(this, comp);
         return result;
         
     }

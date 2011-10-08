@@ -14,8 +14,8 @@ import java.awt.event.MouseEvent;
  */
 public class PecaMovel extends Peca {
 
-    public PecaMovel(Exercito exercito, String titulo, int valor) {
-        super(exercito, titulo, valor);
+    public PecaMovel(Exercito exercito, String titulo, int valor, String id) {
+        super(exercito, titulo, valor, id);
     }
 
     /**
@@ -26,15 +26,10 @@ public class PecaMovel extends Peca {
      * @see Posicao
      */
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void pecaMouseClicked(MouseEvent e) {
         if (!isEnabled()) {
             ((Posicao) getParent()).mouseReleased(e);
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        return;
     }
 
     /**
@@ -46,13 +41,11 @@ public class PecaMovel extends Peca {
      * @see Tabuleiro
      */
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void pecaMouseReleased(MouseEvent e) {
 
         if (isEnabled()) {
             Container tabuleiro;
             Component posicao;
-
-            garantirUnicidadeSelecao();
 
             posicao = (Component) getParent();
 
@@ -68,15 +61,5 @@ public class PecaMovel extends Peca {
             }
         }
 
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        return;
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        return;
     }
 }
