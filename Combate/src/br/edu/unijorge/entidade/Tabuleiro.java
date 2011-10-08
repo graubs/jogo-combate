@@ -10,14 +10,22 @@ import br.edu.unijorge.constante.EntidadesMoveis;
 import br.edu.unijorge.constante.PosicoesInvalidas;
 import br.edu.unijorge.exception.PecaException;
 import br.edu.unijorge.util.UtilX;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
+import java.awt.Container;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -30,18 +38,23 @@ public class Tabuleiro extends JLayeredPane {
             ALTURA = 650,
             LAYER_BACKGROUND = 0,
             LAYER_POSICAO = 400,
-            LAYER_PECA = 800;
+            LAYER_SLOT = 800,
+            LARGURA_SLOT = 260,
+            ALTURA_SLOT = 650;
     
     private static Tabuleiro tabuleiro;
     private Posicao posSelec;
-    private List<Peca> pecasTimeAzul;
-    private List<Peca> pecasTimeVerm;
+    private ButtonGroup pecasTimeAzul;
+    private ButtonGroup pecasTimeVerm;
     private Exercito exercitoAtual;
     private Exercito exercitoAnt;
     //private JLabel bg;
+    private JPanel slotAzul;
+    private JPanel slotVerm;
 
     private Tabuleiro() {
         setBounds(0, 0, ALTURA, LARGURA);
+        //inicializarSlots();
     }
 
     @Override
@@ -69,13 +82,15 @@ public class Tabuleiro extends JLayeredPane {
                 pecaMovel = new PecaMovel(
                         new Exercito(Exercito.EXERCITO_AZUL),
                         c.getNome(),
-                        c.getValor());
+                        c.getValor(),
+                        String.valueOf(i));
                 pecasTimeAzul.add(pecaMovel);
                 //Exercito vermelho
                 pecaMovel = new PecaMovel(
                         new Exercito(Exercito.EXERCITO_VERMELHO),
                         c.getNome(),
-                        c.getValor());
+                        c.getValor(),
+                        String.valueOf(i));
                 pecasTimeVerm.add(pecaMovel);
             }
         }
@@ -88,13 +103,15 @@ public class Tabuleiro extends JLayeredPane {
                 pecaImovel = new PecaImovel(
                         new Exercito(Exercito.EXERCITO_AZUL),
                         c.getNome(),
-                        c.getValor());
+                        c.getValor(),
+                        String.valueOf(i));
                 pecasTimeAzul.add(pecaImovel);
                 //Exercito vermelho
                 pecaImovel = new PecaImovel(
                         new Exercito(Exercito.EXERCITO_VERMELHO),
                         c.getNome(),
-                        c.getValor());
+                        c.getValor(),
+                        String.valueOf(i));
                 pecasTimeVerm.add(pecaImovel);
             }
         }
@@ -103,7 +120,7 @@ public class Tabuleiro extends JLayeredPane {
     private void construirPosicoes() {
         //Limpa o tabuleiro
         removeFromLayer(LAYER_POSICAO);
-        
+
         Posicao pos;
         int idx = 0;
         //Preenche o tabuleiro com as posicoes (casas). Por definicao, e uma matriz de 10x10.
@@ -113,8 +130,7 @@ public class Tabuleiro extends JLayeredPane {
 
                 pos.setPosicaoValida(isPosicaoInvalida(idx++) ? false : true);
                 pos.setOpaque(false);
-                add(pos);
-                ((JLayeredPane) this).setLayer(pos, LAYER_POSICAO);
+                addInLayer(pos, LAYER_POSICAO);
             }
         }
     }
@@ -161,7 +177,7 @@ public class Tabuleiro extends JLayeredPane {
                     posDestino.removeAll();
                     posDestino.add(peca);
                 }
-                alternarExercito(false);
+                alternarExercito();
                 tabuleiro.repaint();
             } else {
                 finalizarJogo();
@@ -169,22 +185,65 @@ public class Tabuleiro extends JLayeredPane {
         } else {
             throw new PecaException("Quantidade de casas deslocadas excede a máxima permitida.");
         }
+        pecasTimeAzul.clearSelection();
+        pecasTimeVerm.clearSelection();
     }
 
     public void autoPosicionarPecas() {
-        for (int i = 0; i < pecasTimeAzul.size(); i++) {
-            Peca pecaAzul = pecasTimeAzul.get(i);
-            pecaAzul.setBounds(0, 0, Peca.LARGURA, Peca.ALTURA);
-            ((Posicao) getComponent(i)).add(pecaAzul);
-            repaint();
+
+        desordenarPecas();
+        
+        int x = 0;
+        Enumeration<AbstractButton> pecasAzul = pecasTimeAzul.getElements();
+        while(pecasAzul.hasMoreElements()){
+            ((Posicao)getComponentsInLayer(LAYER_POSICAO)[x]).add((Peca)pecasAzul.nextElement());
+            x++;
         }
-        int x = 99;
-        for (int i = pecasTimeVerm.size(); i > 0; i--) {
-            ((Posicao) getComponent(x)).add(pecasTimeVerm.get(i - 1));
+        
+        x = 99;
+        Enumeration<AbstractButton> pecasVerm = pecasTimeVerm.getElements();
+        while(pecasVerm.hasMoreElements()) {
+            ((Posicao) getComponentsInLayer(LAYER_POSICAO)[x]).add(pecasVerm.nextElement());
             x--;
-            repaint();
         }
+        repaint();
         alternarExercito(true);
+    }
+
+    public ButtonGroup getPecasTimeAzul() {
+        return pecasTimeAzul;
+    }
+
+    public ButtonGroup getPecasTimeVerm() {
+        return pecasTimeVerm;
+    }
+
+    public Posicao getPosSelec() {
+        return posSelec;
+    }
+
+    public void setPosSelec(Posicao posSelec) {
+        this.posSelec = posSelec;
+    }
+
+    public Exercito getExercitoAnt() {
+        return exercitoAnt;
+    }
+
+    public void setExercitoAnt(Exercito exercitoAnt) {
+        this.exercitoAnt = exercitoAnt;
+    }
+
+    public Exercito getExercitoAtual() {
+        return exercitoAtual;
+    }
+
+    public void setExercitoAtual(Exercito exercitoAtual) {
+        this.exercitoAtual = exercitoAtual;
+    }
+    
+    private void alternarExercito(){
+        alternarExercito(false);
     }
 
     private void alternarExercito(boolean firstRun) {
@@ -228,7 +287,12 @@ public class Tabuleiro extends JLayeredPane {
         int valorPecaAtacada = pecaAtacada.getValor();
 
         if (valorPecaAtacada == EntidadesImoveis.BANDEIRA.getValor()) {
-            JOptionPane.showMessageDialog(this, "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!", "Fim de Jogo.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!",
+                    "Fim de Jogo.",
+                    JOptionPane.INFORMATION_MESSAGE);
+
             return true;
         } else if (valorPecaAtacada == EntidadesImoveis.BOMBA.getValor()) {
             if (valorPeca == EntidadesMoveis.CABO_ARMEIRO.getValor()) {
@@ -250,6 +314,17 @@ public class Tabuleiro extends JLayeredPane {
         } else if (valorPeca < valorPecaAtacada) {
             peca.getParent().removeAll();
         }
+
+        if (!temPecasMoveis(pecaAtacada.getExercito())) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "O Exército " + pecaAtacada.getExercito().getNome()
+                    + " não possui movimentos disponíveis. O Exército "
+                    + peca.getExercito().getNome() + " venceu.",
+                    "Fim de jogo",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
         return false;
     }
 
@@ -302,13 +377,13 @@ public class Tabuleiro extends JLayeredPane {
     }
 
     public void iniciarJogo() {
-        pecasTimeAzul = new ArrayList(Constante.MAX_PECAS_EXERCITO);
-        pecasTimeVerm = new ArrayList(Constante.MAX_PECAS_EXERCITO);
+        pecasTimeAzul = new ButtonGroup();
+        pecasTimeVerm = new ButtonGroup();
         exercitoAnt = new Exercito(Exercito.EXERCITO_VERMELHO);
         exercitoAtual = new Exercito(Exercito.EXERCITO_AZUL);
         construirPosicoes();
         construirPecas();
-        autoPosicionarPecas();
+        inicializarSlots();
     }
 
     private boolean isFaixaValida(PecaMovel peca, Posicao posDestino) {
@@ -329,41 +404,129 @@ public class Tabuleiro extends JLayeredPane {
     }
 
     public void removeFromLayer(int layer) {
-        for(Component c : getComponentsInLayer(layer)){
+        for (Component c : getComponentsInLayer(layer)) {
             remove(c);
         }
     }
+
+    public boolean temPecasMoveis(Exercito exercito) {
+        Component[] posicoes = tabuleiro.getComponentsInLayer(LAYER_POSICAO);
+        for (Component c : posicoes) {
+            Posicao pos = (Posicao) c;
+
+            if (pos.getComponentCount() > 0) {
+                Peca peca = (Peca) pos.getComponent(0);
+                if (null != peca) {
+                    if (peca.getExercito().equals(exercito) && (peca instanceof PecaMovel)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     
-    //Getters e Setters
-    public List getPecasTimeAzul() {
-        return pecasTimeAzul;
+    private void desordenarPecas(){
+        //Exercito Azul
+        List lPecasAzul = Collections.list(pecasTimeAzul.getElements());
+        Collections.shuffle(lPecasAzul);
+        
+        pecasTimeAzul = new ButtonGroup();
+        
+        for(Object p : lPecasAzul){
+            pecasTimeAzul.add((AbstractButton)p);
+        }
+        
+        //Exercito Vermelho
+        List lPecasVerm = Collections.list(pecasTimeVerm.getElements());
+        Collections.shuffle(lPecasVerm);
+        
+        pecasTimeVerm = new ButtonGroup();
+        
+        for(Object p : lPecasVerm){
+            pecasTimeVerm.add((AbstractButton)p);
+        }
     }
 
-    public List getPecasTimeVerm() {
-        return pecasTimeVerm;
+    public JPanel getSlotAzul() {
+        return slotAzul;
     }
 
-    public Posicao getPosSelec() {
-        return posSelec;
+    public void setSlotAzul(JPanel slotAzul) {
+        this.slotAzul = slotAzul;
     }
 
-    public void setPosSelec(Posicao posSelec) {
-        this.posSelec = posSelec;
+    public JPanel getSlotVerm() {
+        return slotVerm;
     }
 
-    public Exercito getExercitoAnt() {
-        return exercitoAnt;
+    public void setSlotVerm(JPanel slotVerm) {
+        this.slotVerm = slotVerm;
     }
 
-    public void setExercitoAnt(Exercito exercitoAnt) {
-        this.exercitoAnt = exercitoAnt;
+    private void inicializarSlots(){
+        slotAzul = new JPanel();
+        slotAzul.setBounds(0, 0, LARGURA_SLOT, ALTURA_SLOT);
+        slotAzul.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        
+        slotVerm = new JPanel();
+        slotVerm.setBounds(0, 0, LARGURA_SLOT, ALTURA_SLOT);
+        slotVerm.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        Posicao pos;
+        //Preenche o slot com as posicoes (casas). Por definicao, e uma matriz de 10x4.
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 10; j++) {
+                pos = new Posicao(i * Posicao.LARGURA_PADRAO, j * Posicao.ALTURA_PADRAO);
+                pos.setPosicaoValida(true);
+                pos.setOpaque(false);
+                slotAzul.add(pos);
+                
+                pos = new Posicao(i * Posicao.LARGURA_PADRAO, j * Posicao.ALTURA_PADRAO);
+                pos.setPosicaoValida(true);
+                pos.setOpaque(false);
+                slotVerm.add(pos);
+            }
+        }
+        
+        int x = 0;
+        Enumeration<AbstractButton> pecasAzul = pecasTimeAzul.getElements();
+        Enumeration<AbstractButton> pecasVerm = pecasTimeVerm.getElements();
+        
+        while(pecasAzul.hasMoreElements()){
+            ((Posicao)slotAzul.getComponent(x)).add((Peca)pecasAzul.nextElement());
+            ((Posicao)slotVerm.getComponent(x)).add((Peca)pecasVerm.nextElement());
+            x++;
+        }
     }
 
-    public Exercito getExercitoAtual() {
-        return exercitoAtual;
+    public Component addInLayer(Component c, int layer) {
+        this.add(c);
+        this.setLayer(c, layer);
+        return c;
     }
+    
+    public void addPecasSlot(Container slot, ButtonGroup listPecas){
+        //Limpa o slot
+        slot.removeAll();
 
-    public void setExercitoAtual(Exercito exercitoAtual) {
-        this.exercitoAtual = exercitoAtual;
+        Posicao pos;
+        //Preenche o slot com as posicoes (casas). Por definicao, e uma matriz de 10x4.
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 10; j++) {
+                pos = new Posicao(i * Posicao.LARGURA_PADRAO, j * Posicao.ALTURA_PADRAO);
+                pos.setOpaque(false);
+                slot.add(pos);
+            }
+        }
+        
+        int x = 0;
+        Enumeration<AbstractButton> pecas = listPecas.getElements();
+        while(pecas.hasMoreElements()){
+            ((Posicao)slot.getComponent(x)).add((Peca)pecas.nextElement());
+            x++;
+        }
+        slot.getParent().repaint();
+        
     }
 }
