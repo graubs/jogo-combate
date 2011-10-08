@@ -11,9 +11,11 @@ import br.edu.unijorge.constante.PosicoesInvalidas;
 import br.edu.unijorge.exception.PecaException;
 import br.edu.unijorge.util.UtilX;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
@@ -36,16 +38,20 @@ public class Tabuleiro extends JLayeredPane {
     private List<Peca> pecasTimeVerm;
     private Exercito exercitoAtual;
     private Exercito exercitoAnt;
-    private JLabel bg;
+    //private JLabel bg;
 
     private Tabuleiro() {
         setBounds(0, 0, ALTURA, LARGURA);
-        bg = new JLabel();
-        bg.setBounds(0, 0, LARGURA, ALTURA);
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_TABULEIRO)));
-        add(bg);
-        setLayer(bg, LAYER_BACKGROUND);
     }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Image img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_TABULEIRO)).getImage();
+        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+    }
+    
+    
 
     public static Tabuleiro getInstance() {
         if (null == tabuleiro) {
@@ -123,7 +129,6 @@ public class Tabuleiro extends JLayeredPane {
                 }
             }
         }
-
         return null;
     }
 
@@ -180,38 +185,6 @@ public class Tabuleiro extends JLayeredPane {
             repaint();
         }
         alternarExercito(true);
-    }
-
-    public List getPecasTimeAzul() {
-        return pecasTimeAzul;
-    }
-
-    public List getPecasTimeVerm() {
-        return pecasTimeVerm;
-    }
-
-    public Posicao getPosSelec() {
-        return posSelec;
-    }
-
-    public void setPosSelec(Posicao posSelec) {
-        this.posSelec = posSelec;
-    }
-
-    public Exercito getExercitoAnt() {
-        return exercitoAnt;
-    }
-
-    public void setExercitoAnt(Exercito exercitoAnt) {
-        this.exercitoAnt = exercitoAnt;
-    }
-
-    public Exercito getExercitoAtual() {
-        return exercitoAtual;
-    }
-
-    public void setExercitoAtual(Exercito exercitoAtual) {
-        this.exercitoAtual = exercitoAtual;
     }
 
     private void alternarExercito(boolean firstRun) {
@@ -359,5 +332,38 @@ public class Tabuleiro extends JLayeredPane {
         for(Component c : getComponentsInLayer(layer)){
             remove(c);
         }
+    }
+    
+    //Getters e Setters
+    public List getPecasTimeAzul() {
+        return pecasTimeAzul;
+    }
+
+    public List getPecasTimeVerm() {
+        return pecasTimeVerm;
+    }
+
+    public Posicao getPosSelec() {
+        return posSelec;
+    }
+
+    public void setPosSelec(Posicao posSelec) {
+        this.posSelec = posSelec;
+    }
+
+    public Exercito getExercitoAnt() {
+        return exercitoAnt;
+    }
+
+    public void setExercitoAnt(Exercito exercitoAnt) {
+        this.exercitoAnt = exercitoAnt;
+    }
+
+    public Exercito getExercitoAtual() {
+        return exercitoAtual;
+    }
+
+    public void setExercitoAtual(Exercito exercitoAtual) {
+        this.exercitoAtual = exercitoAtual;
     }
 }
