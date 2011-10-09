@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.constante.Constante;
@@ -10,7 +6,6 @@ import br.edu.unijorge.constante.EntidadesMoveis;
 import br.edu.unijorge.constante.PosicoesInvalidas;
 import br.edu.unijorge.exception.PecaException;
 import br.edu.unijorge.util.UtilX;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,12 +15,9 @@ import java.util.Enumeration;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -34,27 +26,20 @@ import javax.swing.JPanel;
 public class Tabuleiro extends JLayeredPane {
 
     public static final int 
-            LARGURA = 650,
-            ALTURA = 650,
+            LARGURA_PADRAO = 650,
+            ALTURA_PADRAO = 650,
             LAYER_BACKGROUND = 0,
             LAYER_POSICAO = 400,
-            LAYER_SLOT = 800,
-            LARGURA_SLOT = 260,
-            ALTURA_SLOT = 650;
+            LAYER_SLOT = 800;
     
-    private static Tabuleiro tabuleiro;
     private Posicao posSelec;
     private ButtonGroup pecasTimeAzul;
     private ButtonGroup pecasTimeVerm;
     private Exercito exercitoAtual;
     private Exercito exercitoAnt;
-    //private JLabel bg;
-    private JPanel slotAzul;
-    private JPanel slotVerm;
 
-    private Tabuleiro() {
-        setBounds(0, 0, ALTURA, LARGURA);
-        //inicializarSlots();
+    public Tabuleiro() {
+        setBounds(0, 0, ALTURA_PADRAO, LARGURA_PADRAO);
     }
 
     @Override
@@ -65,57 +50,6 @@ public class Tabuleiro extends JLayeredPane {
     }
     
     
-
-    public static Tabuleiro getInstance() {
-        if (null == tabuleiro) {
-            tabuleiro = new Tabuleiro();
-        }
-        return tabuleiro;
-    }
-
-    private void construirPecas() {
-        PecaMovel pecaMovel;
-        //Constroi as pecas moveis
-        for (EntidadesMoveis c : EntidadesMoveis.values()) {
-            for (int i = 0; i < c.getMaxPorExercito(); i++) {
-                //Exercito azul
-                pecaMovel = new PecaMovel(
-                        new Exercito(Exercito.EXERCITO_AZUL),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeAzul.add(pecaMovel);
-                //Exercito vermelho
-                pecaMovel = new PecaMovel(
-                        new Exercito(Exercito.EXERCITO_VERMELHO),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeVerm.add(pecaMovel);
-            }
-        }
-
-        PecaImovel pecaImovel;
-        //Constroi as pecas imoveis
-        for (EntidadesImoveis c : EntidadesImoveis.values()) {
-            for (int i = 0; i < c.getMaxPorExercito(); i++) {
-                //Exercito azul
-                pecaImovel = new PecaImovel(
-                        new Exercito(Exercito.EXERCITO_AZUL),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeAzul.add(pecaImovel);
-                //Exercito vermelho
-                pecaImovel = new PecaImovel(
-                        new Exercito(Exercito.EXERCITO_VERMELHO),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeVerm.add(pecaImovel);
-            }
-        }
-    }
 
     private void construirPosicoes() {
         //Limpa o tabuleiro
@@ -178,7 +112,7 @@ public class Tabuleiro extends JLayeredPane {
                     posDestino.add(peca);
                 }
                 alternarExercito();
-                tabuleiro.repaint();
+                repaint();
             } else {
                 finalizarJogo();
             }
@@ -217,6 +151,14 @@ public class Tabuleiro extends JLayeredPane {
     public ButtonGroup getPecasTimeVerm() {
         return pecasTimeVerm;
     }
+    
+    public void setPecasTimeAzul(ButtonGroup pecas){
+        this.pecasTimeAzul = pecas;
+    }
+    
+    public void setPecasTimeVerm(ButtonGroup pecas){
+        this.pecasTimeVerm = pecas;
+    }
 
     public Posicao getPosSelec() {
         return posSelec;
@@ -245,6 +187,8 @@ public class Tabuleiro extends JLayeredPane {
     private void alternarExercito(){
         alternarExercito(false);
     }
+    
+    
 
     private void alternarExercito(boolean firstRun) {
         Exercito atual = this.exercitoAnt;
@@ -382,8 +326,6 @@ public class Tabuleiro extends JLayeredPane {
         exercitoAnt = new Exercito(Exercito.EXERCITO_VERMELHO);
         exercitoAtual = new Exercito(Exercito.EXERCITO_AZUL);
         construirPosicoes();
-        construirPecas();
-        inicializarSlots();
     }
 
     private boolean isFaixaValida(PecaMovel peca, Posicao posDestino) {
@@ -410,7 +352,7 @@ public class Tabuleiro extends JLayeredPane {
     }
 
     public boolean temPecasMoveis(Exercito exercito) {
-        Component[] posicoes = tabuleiro.getComponentsInLayer(LAYER_POSICAO);
+        Component[] posicoes = getComponentsInLayer(LAYER_POSICAO);
         for (Component c : posicoes) {
             Posicao pos = (Posicao) c;
 
@@ -445,58 +387,6 @@ public class Tabuleiro extends JLayeredPane {
         
         for(Object p : lPecasVerm){
             pecasTimeVerm.add((AbstractButton)p);
-        }
-    }
-
-    public JPanel getSlotAzul() {
-        return slotAzul;
-    }
-
-    public void setSlotAzul(JPanel slotAzul) {
-        this.slotAzul = slotAzul;
-    }
-
-    public JPanel getSlotVerm() {
-        return slotVerm;
-    }
-
-    public void setSlotVerm(JPanel slotVerm) {
-        this.slotVerm = slotVerm;
-    }
-
-    private void inicializarSlots(){
-        slotAzul = new JPanel();
-        slotAzul.setBounds(0, 0, LARGURA_SLOT, ALTURA_SLOT);
-        slotAzul.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-        
-        slotVerm = new JPanel();
-        slotVerm.setBounds(0, 0, LARGURA_SLOT, ALTURA_SLOT);
-        slotVerm.setBorder(BorderFactory.createLineBorder(Color.RED));
-
-        Posicao pos;
-        //Preenche o slot com as posicoes (casas). Por definicao, e uma matriz de 10x4.
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 10; j++) {
-                pos = new Posicao(i * Posicao.LARGURA_PADRAO, j * Posicao.ALTURA_PADRAO);
-                pos.setPosicaoValida(true);
-                pos.setOpaque(false);
-                slotAzul.add(pos);
-                
-                pos = new Posicao(i * Posicao.LARGURA_PADRAO, j * Posicao.ALTURA_PADRAO);
-                pos.setPosicaoValida(true);
-                pos.setOpaque(false);
-                slotVerm.add(pos);
-            }
-        }
-        
-        int x = 0;
-        Enumeration<AbstractButton> pecasAzul = pecasTimeAzul.getElements();
-        Enumeration<AbstractButton> pecasVerm = pecasTimeVerm.getElements();
-        
-        while(pecasAzul.hasMoreElements()){
-            ((Posicao)slotAzul.getComponent(x)).add((Peca)pecasAzul.nextElement());
-            ((Posicao)slotVerm.getComponent(x)).add((Peca)pecasVerm.nextElement());
-            x++;
         }
     }
 
