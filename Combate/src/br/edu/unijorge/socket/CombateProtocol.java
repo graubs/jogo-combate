@@ -18,7 +18,7 @@ public class CombateProtocol {
         String output = "";
         Peca pc = null;
         String [] params = input.split(";");
-        Tabuleiro t = Tabuleiro.getInstance();
+        Tabuleiro t = null;
         Posicao ps = t.getPosicao(params[IDX_POSICAO]);
         try{
             pc = (Peca)ps.getComponent(0);

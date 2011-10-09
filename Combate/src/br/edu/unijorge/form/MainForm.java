@@ -10,13 +10,16 @@
  */
 package br.edu.unijorge.form;
 
+import br.edu.unijorge.constante.Constante;
+import br.edu.unijorge.constante.EntidadesImoveis;
+import br.edu.unijorge.constante.EntidadesMoveis;
 import br.edu.unijorge.entidade.Exercito;
-import br.edu.unijorge.entidade.Peca;
+import br.edu.unijorge.entidade.PecaImovel;
 import br.edu.unijorge.entidade.PecaMovel;
-import br.edu.unijorge.entidade.Posicao;
-import br.edu.unijorge.entidade.Tabuleiro;
 import br.edu.unijorge.util.UtilX;
 import java.awt.Component;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,21 +33,61 @@ public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
         initComponents();
-        //setBounds(0, 0, Tabuleiro.LARGURA + 10, Tabuleiro.ALTURA + 55);
-        tabuleiro = Tabuleiro.getInstance();
+        pecasTimeAzul = new ButtonGroup();
+        pecasTimeVerm = new ButtonGroup();
         UtilX.centerX(this);
         setResizable(false);
     }
 
     private void inicializarTabuleiro() {
-        jpTabuleiro.remove(tabuleiro);
-        jpTabuleiro.add(tabuleiro);
-        tabuleiro.iniciarJogo();
-        jpSlotAzul.add(tabuleiro.getSlotAzul());
-        jpSlotVerm.add(tabuleiro.getSlotVerm());
-        jpSlotAzul.updateUI();
-        jpSlotVerm.updateUI();
+        construirPecas();
+        quartelAzul.popularQuartel(pecasTimeAzul);
+        quartelVerm.popularQuartel(pecasTimeVerm);
         repaint();
+    }
+    
+    private void construirPecas() {
+        PecaMovel pecaMovel;
+        //Constroi as pecas moveis
+        for (EntidadesMoveis c : EntidadesMoveis.values()) {
+            for (int i = 0; i < c.getMaxPorExercito(); i++) {
+                //Exercito azul
+                pecaMovel = new PecaMovel(
+                        new Exercito(Exercito.EXERCITO_AZUL),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeAzul.add(pecaMovel);
+                //Exercito vermelho
+                pecaMovel = new PecaMovel(
+                        new Exercito(Exercito.EXERCITO_VERMELHO),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeVerm.add(pecaMovel);
+            }
+        }
+
+        PecaImovel pecaImovel;
+        //Constroi as pecas imoveis
+        for (EntidadesImoveis c : EntidadesImoveis.values()) {
+            for (int i = 0; i < c.getMaxPorExercito(); i++) {
+                //Exercito azul
+                pecaImovel = new PecaImovel(
+                        new Exercito(Exercito.EXERCITO_AZUL),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeAzul.add(pecaImovel);
+                //Exercito vermelho
+                pecaImovel = new PecaImovel(
+                        new Exercito(Exercito.EXERCITO_VERMELHO),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeVerm.add(pecaImovel);
+            }
+        }
     }
 
     /** This method is called from within the constructor to
@@ -56,10 +99,9 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpMain = new javax.swing.JPanel();
-        jpSlotAzul = new javax.swing.JPanel();
-        jpTabuleiro = new javax.swing.JPanel();
-        jpSlotVerm = new javax.swing.JPanel();
+        quartelAzul = new br.edu.unijorge.entidade.Quartel();
+        tabuleiro = new br.edu.unijorge.entidade.Tabuleiro();
+        quartelVerm = new br.edu.unijorge.entidade.Quartel();
         jmbMenu = new javax.swing.JMenuBar();
         jmJogo = new javax.swing.JMenu();
         jmNovoJogo = new javax.swing.JMenu();
@@ -72,73 +114,46 @@ public class MainForm extends javax.swing.JFrame {
         jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("COMBATE");
+        setIconImage(new ImageIcon(getClass().getResource(Constante.IMAGEM_ICONE)).getImage());
+        setMinimumSize(new java.awt.Dimension(1200, 700));
+        setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 formMouseReleased(evt);
             }
         });
+        getContentPane().setLayout(null);
 
-        jpSlotAzul.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jpSlotAzul.setPreferredSize(new java.awt.Dimension(260, 650));
-
-        javax.swing.GroupLayout jpSlotAzulLayout = new javax.swing.GroupLayout(jpSlotAzul);
-        jpSlotAzul.setLayout(jpSlotAzulLayout);
-        jpSlotAzulLayout.setHorizontalGroup(
-            jpSlotAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
+        javax.swing.GroupLayout quartelAzulLayout = new javax.swing.GroupLayout(quartelAzul);
+        quartelAzul.setLayout(quartelAzulLayout);
+        quartelAzulLayout.setHorizontalGroup(
+            quartelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
-        jpSlotAzulLayout.setVerticalGroup(
-            jpSlotAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+        quartelAzulLayout.setVerticalGroup(
+            quartelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
-        jpTabuleiro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jpTabuleiro.setMaximumSize(new java.awt.Dimension(650, 650));
-        jpTabuleiro.setMinimumSize(new java.awt.Dimension(650, 650));
-        jpTabuleiro.setPreferredSize(new java.awt.Dimension(650, 650));
+        getContentPane().add(quartelAzul);
+        quartelAzul.setBounds(0, 0, 260, 650);
+        getContentPane().add(tabuleiro);
+        tabuleiro.setBounds(270, 0, 650, 650);
 
-        javax.swing.GroupLayout jpTabuleiroLayout = new javax.swing.GroupLayout(jpTabuleiro);
-        jpTabuleiro.setLayout(jpTabuleiroLayout);
-        jpTabuleiroLayout.setHorizontalGroup(
-            jpTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+        javax.swing.GroupLayout quartelVermLayout = new javax.swing.GroupLayout(quartelVerm);
+        quartelVerm.setLayout(quartelVermLayout);
+        quartelVermLayout.setHorizontalGroup(
+            quartelVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
-        jpTabuleiroLayout.setVerticalGroup(
-            jpTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
-        );
-
-        jpSlotVerm.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jpSlotVerm.setPreferredSize(new java.awt.Dimension(260, 650));
-
-        javax.swing.GroupLayout jpSlotVermLayout = new javax.swing.GroupLayout(jpSlotVerm);
-        jpSlotVerm.setLayout(jpSlotVermLayout);
-        jpSlotVermLayout.setHorizontalGroup(
-            jpSlotVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
-        );
-        jpSlotVermLayout.setVerticalGroup(
-            jpSlotVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+        quartelVermLayout.setVerticalGroup(
+            quartelVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jpMainLayout = new javax.swing.GroupLayout(jpMain);
-        jpMain.setLayout(jpMainLayout);
-        jpMainLayout.setHorizontalGroup(
-            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpMainLayout.createSequentialGroup()
-                .addComponent(jpSlotAzul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpTabuleiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpSlotVerm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jpMainLayout.setVerticalGroup(
-            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpSlotAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpSlotVerm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpTabuleiro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(quartelVerm);
+        quartelVerm.setBounds(930, 0, 260, 650);
 
         jmJogo.setText("Jogo");
 
@@ -198,17 +213,6 @@ public class MainForm extends javax.swing.JFrame {
 
         setJMenuBar(jmbMenu);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,7 +256,7 @@ public class MainForm extends javax.swing.JFrame {
             jr.setVisible(true);
         }
     }//GEN-LAST:event_jmiNovoJogoRedeMouseReleased
-
+    
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         Component c = evt.getComponent();
         System.out.print(c);
@@ -303,14 +307,15 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiRegras;
     private javax.swing.JMenuItem jmiSair;
     private javax.swing.JMenuItem jmiSobre;
-    private javax.swing.JPanel jpMain;
-    private javax.swing.JPanel jpSlotAzul;
-    private javax.swing.JPanel jpSlotVerm;
-    private javax.swing.JPanel jpTabuleiro;
     private javax.swing.JPopupMenu.Separator jsJogo1;
+    private br.edu.unijorge.entidade.Quartel quartelAzul;
+    private br.edu.unijorge.entidade.Quartel quartelVerm;
+    private br.edu.unijorge.entidade.Tabuleiro tabuleiro;
     // End of variables declaration//GEN-END:variables
-    Tabuleiro tabuleiro;
     RegrasForm rf;
     SobreForm sf;
     NovoJogoRedeForm jr;
+    
+    ButtonGroup pecasTimeAzul;
+    ButtonGroup pecasTimeVerm;
 }

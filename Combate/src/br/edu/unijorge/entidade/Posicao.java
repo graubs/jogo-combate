@@ -23,8 +23,6 @@ public class Posicao extends JPanel implements MouseListener{
     public static final int LARGURA_PADRAO = 65;
     public static final int ALTURA_PADRAO = 65;
     public static final int MAX_POSICOES = 100;
-    public static final int POS_X_INICIAL = 0;
-    public static final int POS_Y_INICIAL = 0;
     public static final int MAX_POSICOES_INVALIDAS = 8;
     
     private boolean posicaoValida;
