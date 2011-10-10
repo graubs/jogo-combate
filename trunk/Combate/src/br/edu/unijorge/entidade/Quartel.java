@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -55,7 +56,10 @@ public class Quartel extends JPanel {
         Enumeration<AbstractButton> pcs = this.pecas.getElements();
 
         while (pcs.hasMoreElements()) {
-            ((Posicao) getComponent(x)).add((Peca) pcs.nextElement());
+            pos = (Posicao) getComponent(x);
+            Peca peca = (Peca) pcs.nextElement();
+            pos.add(peca);
+            pos.repaint();
             x++;
         }
     }

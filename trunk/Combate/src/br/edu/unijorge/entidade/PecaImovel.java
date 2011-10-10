@@ -34,6 +34,4 @@ public class PecaImovel extends Peca {
     public void pecaMouseReleased(MouseEvent evt) {
         return;
     }
-
-    
 }

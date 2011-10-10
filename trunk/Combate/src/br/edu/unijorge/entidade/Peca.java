@@ -2,10 +2,8 @@ package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.constante.Constante;
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseEvent;
 import javax.swing.JToggleButton;
@@ -19,8 +17,9 @@ import javax.swing.border.BevelBorder;
  */
 
 public abstract class Peca extends JToggleButton {
-    public static final int LARGURA = 63, //Largura padrão do componente
-            ALTURA = 63; //Altura padrão do componente
+    public static final int
+            LARGURA_PADRAO = 63, //Largura padrão do componente
+            ALTURA_PADRAO = 63; //Altura padrão do componente
     private Exercito exercito;
     private int valor;
     private String id;
@@ -33,10 +32,8 @@ public abstract class Peca extends JToggleButton {
         this.exercito = exercito;
         this.titulo = titulo;
         this.valor = valor;
-        //setBounds(0, 0, LARGURA, ALTURA);
-//        setPreferredSize(new Dimension(LARGURA, ALTURA));
-//        setMaximumSize(new Dimension(LARGURA, ALTURA));
-//        setMinimumSize(new Dimension(LARGURA, ALTURA));
+        this.id = id;
+        setBounds(0, 0, LARGURA_PADRAO, ALTURA_PADRAO);
         setBorder(new BevelBorder(BevelBorder.RAISED));
         addMouseListener(new java.awt.event.MouseAdapter() {
 
@@ -85,6 +82,7 @@ public abstract class Peca extends JToggleButton {
      */
     @Override
     public boolean equals(Object obj) {
+
         if (!(obj instanceof Peca)) {
             return false;
         }

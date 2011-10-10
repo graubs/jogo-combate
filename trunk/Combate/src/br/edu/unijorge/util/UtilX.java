@@ -50,6 +50,12 @@ public abstract class UtilX {
                 ((parent.getHeight() / 2) - (child.getHeight() / 2)) + parent.getLocation().y);
     }
 
+    public static void centerChildX(Component parent, Component child) {
+        child.setLocation(
+                ((parent.getWidth() / 2) - (child.getWidth() / 2)) + parent.getLocation().x,
+                0);
+    }
+
     public static String getTextoSemAcento(String texto) {
         String[] letrasA = new String[]{
             "Á", "É", "Í", "Ó", "Ú",

@@ -49,7 +49,49 @@ public class Tabuleiro extends JLayeredPane {
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
-    
+    private void construirPecas() {
+        PecaMovel pecaMovel;
+        //Constroi as pecas moveis
+        for (EntidadesMoveis c : EntidadesMoveis.values()) {
+            for (int i = 0; i < c.getMaxPorExercito(); i++) {
+                //Exercito azul
+                pecaMovel = new PecaMovel(
+                        new Exercito(Exercito.EXERCITO_AZUL),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeAzul.add(pecaMovel);
+                //Exercito vermelho
+                pecaMovel = new PecaMovel(
+                        new Exercito(Exercito.EXERCITO_VERMELHO),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeVerm.add(pecaMovel);
+            }
+        }
+
+        PecaImovel pecaImovel;
+        //Constroi as pecas imoveis
+        for (EntidadesImoveis c : EntidadesImoveis.values()) {
+            for (int i = 0; i < c.getMaxPorExercito(); i++) {
+                //Exercito azul
+                pecaImovel = new PecaImovel(
+                        new Exercito(Exercito.EXERCITO_AZUL),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeAzul.add(pecaImovel);
+                //Exercito vermelho
+                pecaImovel = new PecaImovel(
+                        new Exercito(Exercito.EXERCITO_VERMELHO),
+                        c.getNome(),
+                        c.getValor(),
+                        String.valueOf(i));
+                pecasTimeVerm.add(pecaImovel);
+            }
+        }
+    }
 
     private void construirPosicoes() {
         //Limpa o tabuleiro
@@ -325,7 +367,9 @@ public class Tabuleiro extends JLayeredPane {
         pecasTimeVerm = new ButtonGroup();
         exercitoAnt = new Exercito(Exercito.EXERCITO_VERMELHO);
         exercitoAtual = new Exercito(Exercito.EXERCITO_AZUL);
+        construirPecas();
         construirPosicoes();
+        autoPosicionarPecas();
     }
 
     private boolean isFaixaValida(PecaMovel peca, Posicao posDestino) {
