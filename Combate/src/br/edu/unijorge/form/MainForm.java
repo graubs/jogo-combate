@@ -11,14 +11,9 @@
 package br.edu.unijorge.form;
 
 import br.edu.unijorge.constante.Constante;
-import br.edu.unijorge.constante.EntidadesImoveis;
-import br.edu.unijorge.constante.EntidadesMoveis;
-import br.edu.unijorge.entidade.Exercito;
-import br.edu.unijorge.entidade.PecaImovel;
-import br.edu.unijorge.entidade.PecaMovel;
 import br.edu.unijorge.util.UtilX;
 import java.awt.Component;
-import javax.swing.ButtonGroup;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,63 +28,21 @@ public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
         initComponents();
-        pecasTimeAzul = new ButtonGroup();
-        pecasTimeVerm = new ButtonGroup();
-        UtilX.centerX(this);
+        Dimension d = new Dimension(660, 700);
+        setMinimumSize(d);
+        setPreferredSize(d);
+        setMaximumSize(d);
         setResizable(false);
+        UtilX.centerChildX(this, tabuleiro);
+        tabuleiro.setAlignmentY(TOP_ALIGNMENT);
+        UtilX.centerX(this);
     }
 
     private void inicializarTabuleiro() {
-        construirPecas();
-        quartelAzul.popularQuartel(pecasTimeAzul);
-        quartelVerm.popularQuartel(pecasTimeVerm);
+        tabuleiro.iniciarJogo();
         repaint();
     }
     
-    private void construirPecas() {
-        PecaMovel pecaMovel;
-        //Constroi as pecas moveis
-        for (EntidadesMoveis c : EntidadesMoveis.values()) {
-            for (int i = 0; i < c.getMaxPorExercito(); i++) {
-                //Exercito azul
-                pecaMovel = new PecaMovel(
-                        new Exercito(Exercito.EXERCITO_AZUL),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeAzul.add(pecaMovel);
-                //Exercito vermelho
-                pecaMovel = new PecaMovel(
-                        new Exercito(Exercito.EXERCITO_VERMELHO),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeVerm.add(pecaMovel);
-            }
-        }
-
-        PecaImovel pecaImovel;
-        //Constroi as pecas imoveis
-        for (EntidadesImoveis c : EntidadesImoveis.values()) {
-            for (int i = 0; i < c.getMaxPorExercito(); i++) {
-                //Exercito azul
-                pecaImovel = new PecaImovel(
-                        new Exercito(Exercito.EXERCITO_AZUL),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeAzul.add(pecaImovel);
-                //Exercito vermelho
-                pecaImovel = new PecaImovel(
-                        new Exercito(Exercito.EXERCITO_VERMELHO),
-                        c.getNome(),
-                        c.getValor(),
-                        String.valueOf(i));
-                pecasTimeVerm.add(pecaImovel);
-            }
-        }
-    }
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -99,14 +52,10 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        quartelAzul = new br.edu.unijorge.entidade.Quartel();
         tabuleiro = new br.edu.unijorge.entidade.Tabuleiro();
-        quartelVerm = new br.edu.unijorge.entidade.Quartel();
         jmbMenu = new javax.swing.JMenuBar();
         jmJogo = new javax.swing.JMenu();
-        jmNovoJogo = new javax.swing.JMenu();
-        jmiNovoJogoLocal = new javax.swing.JMenuItem();
-        jmiNovoJogoRede = new javax.swing.JMenuItem();
+        jmiNovoJogo = new javax.swing.JMenuItem();
         jsJogo1 = new javax.swing.JPopupMenu.Separator();
         jmiSair = new javax.swing.JMenuItem();
         jmAjuda = new javax.swing.JMenu();
@@ -116,7 +65,7 @@ public class MainForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("COMBATE");
         setIconImage(new ImageIcon(getClass().getResource(Constante.IMAGEM_ICONE)).getImage());
-        setMinimumSize(new java.awt.Dimension(1200, 700));
+        setMinimumSize(new java.awt.Dimension(670, 720));
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -124,60 +73,19 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
-
-        javax.swing.GroupLayout quartelAzulLayout = new javax.swing.GroupLayout(quartelAzul);
-        quartelAzul.setLayout(quartelAzulLayout);
-        quartelAzulLayout.setHorizontalGroup(
-            quartelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
-        );
-        quartelAzulLayout.setVerticalGroup(
-            quartelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(quartelAzul);
-        quartelAzul.setBounds(0, 0, 260, 650);
         getContentPane().add(tabuleiro);
-        tabuleiro.setBounds(270, 0, 650, 650);
-
-        javax.swing.GroupLayout quartelVermLayout = new javax.swing.GroupLayout(quartelVerm);
-        quartelVerm.setLayout(quartelVermLayout);
-        quartelVermLayout.setHorizontalGroup(
-            quartelVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
-        );
-        quartelVermLayout.setVerticalGroup(
-            quartelVermLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(quartelVerm);
-        quartelVerm.setBounds(930, 0, 260, 650);
+        tabuleiro.setBounds(0, 0, 650, 650);
 
         jmJogo.setText("Jogo");
 
-        jmNovoJogo.setText("Novo Jogo");
-
-        jmiNovoJogoLocal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jmiNovoJogoLocal.setText("Local");
-        jmiNovoJogoLocal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jmiNovoJogo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jmiNovoJogo.setText("Novo Jogo");
+        jmiNovoJogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jmiNovoJogoLocalMouseReleased(evt);
+                jmiNovoJogoMouseReleased1(evt);
             }
         });
-        jmNovoJogo.add(jmiNovoJogoLocal);
-
-        jmiNovoJogoRede.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        jmiNovoJogoRede.setText("Rede...");
-        jmiNovoJogoRede.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jmiNovoJogoRedeMouseReleased(evt);
-            }
-        });
-        jmNovoJogo.add(jmiNovoJogoRede);
-
-        jmJogo.add(jmNovoJogo);
+        jmJogo.add(jmiNovoJogo);
         jmJogo.add(jsJogo1);
 
         jmiSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
@@ -226,9 +134,9 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmiSairMouseReleased
 
-    private void jmiNovoJogoLocalMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmiNovoJogoLocalMouseReleased
+    private void jmiNovoJogoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmiNovoJogoMouseReleased
         inicializarTabuleiro();
-}//GEN-LAST:event_jmiNovoJogoLocalMouseReleased
+}//GEN-LAST:event_jmiNovoJogoMouseReleased
 
     private void jmiRegrasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmiRegrasMouseReleased
         if(rf == null){
@@ -247,20 +155,15 @@ public class MainForm extends javax.swing.JFrame {
             sf.setVisible(true);
         }
     }//GEN-LAST:event_jmiSobreMouseReleased
-
-    private void jmiNovoJogoRedeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmiNovoJogoRedeMouseReleased
-        if(jr == null){
-            jr = new NovoJogoRedeForm(this, true);
-            jr.setVisible(true);
-        }else{
-            jr.setVisible(true);
-        }
-    }//GEN-LAST:event_jmiNovoJogoRedeMouseReleased
     
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         Component c = evt.getComponent();
         System.out.print(c);
     }//GEN-LAST:event_formMouseReleased
+
+    private void jmiNovoJogoMouseReleased1(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmiNovoJogoMouseReleased1
+        inicializarTabuleiro();
+    }//GEN-LAST:event_jmiNovoJogoMouseReleased1
 
     /**
      * @param args the command line arguments
@@ -297,25 +200,19 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jmAjuda;
     private javax.swing.JMenu jmJogo;
-    private javax.swing.JMenu jmNovoJogo;
     private javax.swing.JMenuBar jmbMenu;
-    private javax.swing.JMenuItem jmiNovoJogoLocal;
-    private javax.swing.JMenuItem jmiNovoJogoRede;
+    private javax.swing.JMenuItem jmiNovoJogo;
     private javax.swing.JMenuItem jmiRegras;
     private javax.swing.JMenuItem jmiSair;
     private javax.swing.JMenuItem jmiSobre;
     private javax.swing.JPopupMenu.Separator jsJogo1;
-    private br.edu.unijorge.entidade.Quartel quartelAzul;
-    private br.edu.unijorge.entidade.Quartel quartelVerm;
     private br.edu.unijorge.entidade.Tabuleiro tabuleiro;
     // End of variables declaration//GEN-END:variables
     RegrasForm rf;
     SobreForm sf;
     NovoJogoRedeForm jr;
-    
-    ButtonGroup pecasTimeAzul;
-    ButtonGroup pecasTimeVerm;
 }

@@ -44,22 +44,21 @@ public class PecaMovel extends Peca {
     public void pecaMouseReleased(MouseEvent e) {
 
         if (isEnabled()) {
-            Container tabuleiro;
+            Container parent;
             Component posicao;
 
             posicao = (Component) getParent();
 
             if (null != posicao) {
-                tabuleiro = (Container) posicao.getParent();
-                if (null != tabuleiro) {
+                parent = (Container) posicao.getParent();
+                if (null != parent) {
                     try {
-                        ((Tabuleiro) tabuleiro).setPosSelec((Posicao) posicao);
+                        ((Tabuleiro) parent).setPosSelec((Posicao) posicao);
                     } catch (ClassCastException ex) {
                         return;
                     }
                 }
             }
         }
-
     }
 }

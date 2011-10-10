@@ -5,6 +5,7 @@
 package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.exception.PecaException;
+import br.edu.unijorge.form.MainForm;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -19,15 +20,15 @@ import javax.swing.border.LineBorder;
  *
  * @author Glauber
  */
-public class Posicao extends JPanel implements MouseListener{
+public class Posicao extends JPanel implements MouseListener {
+
     public static final int LARGURA_PADRAO = 65;
     public static final int ALTURA_PADRAO = 65;
     public static final int MAX_POSICOES = 100;
     public static final int MAX_POSICOES_INVALIDAS = 8;
-    
     private boolean posicaoValida;
-    
-    public Posicao(int x, int y){
+
+    public Posicao(int x, int y) {
         setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
         setBorder(LineBorder.createBlackLineBorder());
@@ -42,10 +43,10 @@ public class Posicao extends JPanel implements MouseListener{
         comp.setLocation(0, 0);
         repaint();
         return result;
-        
+
     }
-    
-    public String getNome(){
+
+    public String getNome() {
         return String.valueOf(getX() / LARGURA_PADRAO) + String.valueOf(getY() / ALTURA_PADRAO);
     }
 
@@ -69,19 +70,16 @@ public class Posicao extends JPanel implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Container parent = ((Component)this).getParent();
-        
-        if(null != parent){
-            try{
-                PecaMovel peca = (PecaMovel)((Tabuleiro)parent).getPosSelec().getComponent(0);
-                ((Tabuleiro)parent).moverPeca(peca, this);
-            }catch(ClassCastException ex){
+        Container parent = ((Component) this).getParent();
+        if (null != parent) {
+            try {
+                PecaMovel peca = (PecaMovel) ((Tabuleiro) parent).getPosSelec().getComponent(0);
+                ((Tabuleiro) parent).moverPeca(peca, this);
+            } catch (ClassCastException ex) {
                 JOptionPane.showMessageDialog(parent, "Não é possível mover essa peça.");
-            }catch(NullPointerException ne){
-                
-            }catch(ArrayIndexOutOfBoundsException aex){
-            
-            }catch(PecaException pe){
+            } catch (NullPointerException ne) {
+            } catch (ArrayIndexOutOfBoundsException aex) {
+            } catch (PecaException pe) {
                 JOptionPane.showMessageDialog(parent, pe.getMessage());
             }
         }
@@ -96,5 +94,4 @@ public class Posicao extends JPanel implements MouseListener{
     public void mouseExited(MouseEvent e) {
         return;
     }
-    
 }
