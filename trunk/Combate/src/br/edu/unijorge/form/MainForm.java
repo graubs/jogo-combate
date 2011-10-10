@@ -23,12 +23,15 @@ import javax.swing.JOptionPane;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    public static final int LAYER_TABULEIRO = 0;
-    public static final int LAYER_MSG = 400;
+    public static final int 
+            LARGURA_PADRAO = 660,
+            ALTURA_PADRAO = 700,
+            LAYER_TABULEIRO = 0,
+            LAYER_MSG = 400;
 
     public MainForm() {
         initComponents();
-        Dimension d = new Dimension(660, 700);
+        Dimension d = new Dimension(LARGURA_PADRAO, ALTURA_PADRAO);
         setMinimumSize(d);
         setPreferredSize(d);
         setMaximumSize(d);
