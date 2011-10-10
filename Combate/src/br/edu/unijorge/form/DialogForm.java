@@ -10,6 +10,8 @@
  */
 package br.edu.unijorge.form;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author Glauber
@@ -22,6 +24,10 @@ public class DialogForm extends javax.swing.JDialog {
     public DialogForm(java.awt.Frame parent, boolean modal, int largura, int altura) {
         super(parent, modal);
         //initComponents();
+        Dimension d = new Dimension(largura, altura);
+        setMinimumSize(d);
+        setMaximumSize(d);
+        setPreferredSize(d);
         setBounds(this.getX(), this.getY(), largura, altura);
         setResizable(!modal);
     }

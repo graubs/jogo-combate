@@ -11,6 +11,10 @@
 package br.edu.unijorge.form;
 
 import br.edu.unijorge.util.UtilX;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  *
@@ -20,9 +24,24 @@ public class SobreForm extends DialogForm {
 
     /** Creates new form SobreForm */
     public SobreForm(java.awt.Frame parent, boolean modal) {
-        super(parent, modal, DialogForm.LARGURA, DialogForm.ALTURA);
+        super(parent, modal, 455, 300);
         initComponents();
         UtilX.centerChild(parent, this);
+        jlVersao.setText(getVersao());
+    }
+
+    private String getVersao(){
+        Properties p = new Properties();
+        try {
+            p.load(new FileReader(getClass().getResource("/Combate.properties").getFile()));
+            return "Versão: " + p.getProperty("versao.programa");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Arquivo de Propriedades nao encontrado.");
+            return "";
+        }catch(IOException ex2){
+            System.out.println("Nao foi possivel carregar o arquivo de Propriedades.");
+            return "";
+        }
     }
 
     /** This method is called from within the constructor to
@@ -34,21 +53,66 @@ public class SobreForm extends DialogForm {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jlTitulo = new javax.swing.JLabel();
+        jlVersao = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jbOk = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        jlTitulo.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
+        jlTitulo.setText("COMBATE");
+        getContentPane().add(jlTitulo);
+        jlTitulo.setBounds(12, 48, 178, 42);
+
+        jlVersao.setText("Versão:");
+        getContentPane().add(jlVersao);
+        jlVersao.setBounds(12, 226, 320, 16);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setEditable(false);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Versão para computador de um dos mais famosos jogos de tabuleiro. \nJogo desenvolvido em Java, para atender aos anseios dos Mestres do Projeto Integrador da turma de 3º semestre do curso de Análise e Desenvolvimento de Sistemas do Centro Universitário Jorge Amado. ");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setOpaque(false);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(12, 96, 420, 118);
+
+        jbOk.setText("Ok");
+        jbOk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jbOkMouseReleased(evt);
+            }
+        });
+        getContentPane().add(jbOk);
+        jbOk.setBounds(350, 220, 78, 28);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(240, 60, 16, 16);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(200, 60, 16, 16);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(220, 60, 16, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbOkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbOkMouseReleased
+        dispose();
+    }//GEN-LAST:event_jbOkMouseReleased
 
     /**
      * @param args the command line arguments
@@ -94,5 +158,13 @@ public class SobreForm extends DialogForm {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JButton jbOk;
+    private javax.swing.JLabel jlTitulo;
+    private javax.swing.JLabel jlVersao;
     // End of variables declaration//GEN-END:variables
 }

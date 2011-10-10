@@ -37,7 +37,6 @@ public class MainForm extends javax.swing.JFrame {
         setMaximumSize(d);
         setResizable(false);
         UtilX.centerChildX(this, tabuleiro);
-        tabuleiro.setAlignmentY(TOP_ALIGNMENT);
         UtilX.centerX(this);
     }
 
@@ -66,7 +65,7 @@ public class MainForm extends javax.swing.JFrame {
         jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("COMBATE");
+        setTitle("COMBATE ***");
         setIconImage(new ImageIcon(getClass().getResource(Constante.IMAGEM_ICONE)).getImage());
         setMinimumSize(new java.awt.Dimension(670, 720));
         setResizable(false);
