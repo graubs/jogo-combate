@@ -23,8 +23,8 @@ public abstract class Constante {
     public static final String PATH_IMAGENS = "/br/edu/unijorge/imagens/";
     public static final String EXTENSAO_IMAGEM = ".png";
     public static final String IMAGEM_FUNDO_TABULEIRO = "/br/edu/unijorge/imagens/Terreno-Combate.png";
+     public static final String IMAGEM_FUNDO_APRESENTACAO = "/br/edu/unijorge/imagens/Imagem-Main.png";
     public static final String IMAGEM_FUNDO_QUARTEL = "/br/edu/unijorge/imagens/Quartel-Combate.png";
-    public static final String IMAGEM_ESPIAO_AZUL = "/br/edu/unijorge/imagens/azul-1-espiao.png";
     public static final String IMAGEM_ICONE = "/br/edu/unijorge/imagens/combateIcon.png";
 
 }

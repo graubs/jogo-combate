@@ -38,6 +38,9 @@ public class MainForm extends javax.swing.JFrame {
         setMaximumSize(d);
         setResizable(false);
         UtilX.centerChildX(this, tabuleiro);
+        jlJogadorInfo.setLocation(
+                ((this.getWidth() / 2) - (jlJogadorInfo.getWidth() / 2)) + this.getLocation().x,
+                jlJogadorInfo.getLocation().y);
         UtilX.centerX(this);
     }
 
@@ -80,6 +83,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jlJogadorInfo.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jlJogadorInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlJogadorInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(jlJogadorInfo);
         jlJogadorInfo.setBounds(0, 650, 650, 30);
         getContentPane().add(tabuleiro);

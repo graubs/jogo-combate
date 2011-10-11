@@ -127,7 +127,14 @@ public abstract class Peca extends JToggleButton {
     
     @Override
     public String toString() {
-        return "Peça: " + this.titulo + "(" + this.valor + ")" + " Exército: " + getExercito().toString();
+        return "Peça: " + this.titulo + "(" + this.valor + ")." + " Exército: " + getExercito().toString();
+    }
+
+    public ImageIcon getInsignia(){
+        return new ImageIcon(getClass().getResource(
+                        Constante.PATH_IMAGENS
+                        + "Insignia-"
+                        + getTitulo() + Constante.EXTENSAO_IMAGEM));
     }
 
     public abstract void pecaMouseReleased(MouseEvent evt);

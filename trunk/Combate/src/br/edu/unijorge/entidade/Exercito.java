@@ -51,7 +51,7 @@ public class Exercito {
 
     @Override
     public String toString() {
-        return this.nome + " " + String.valueOf(this.id);
+        return this.nome + " (" + String.valueOf(this.id) + ")";
     }
             
     public long getId() {
