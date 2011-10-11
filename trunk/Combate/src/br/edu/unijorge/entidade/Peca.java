@@ -7,7 +7,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseEvent;
 import javax.swing.JToggleButton;
-import javax.swing.border.BevelBorder;
 
 /**
  * Abstrai a peça (peão) do jogo. Possui características como Exército, Título e Valor.
@@ -24,7 +23,6 @@ public abstract class Peca extends JToggleButton {
     private int valor;
     private String id;
     private String titulo;
-    //private boolean enabled;
 
     //Construtor da classe
     public Peca(Exercito exercito, String titulo, int valor, String id) {
@@ -34,7 +32,6 @@ public abstract class Peca extends JToggleButton {
         this.valor = valor;
         this.id = id;
         setBounds(0, 0, LARGURA_PADRAO, ALTURA_PADRAO);
-        setBorder(new BevelBorder(BevelBorder.RAISED));
         addMouseListener(new java.awt.event.MouseAdapter() {
 
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -59,8 +56,9 @@ public abstract class Peca extends JToggleButton {
                         Constante.PATH_IMAGENS
                         + getExercito().getCorExercito() + "-"
                         + getTitulo() + Constante.EXTENSAO_IMAGEM))).getImage();
-
+                setOpaque(false);
                 g.drawImage(i, 0, 0, this.getWidth(), this.getHeight(), this);
+                        
             }catch(NullPointerException ex){
                 System.out.println(Constante.PATH_IMAGENS
                         + getExercito().getCorExercito() + "-"
@@ -90,47 +88,6 @@ public abstract class Peca extends JToggleButton {
         return this.id.equals(((Peca) obj).getId());
     }
 
-    /**
-     * Retorna uma coleção de <code>Peca</code> que fazem parte do mesmo exército
-     * dessa peça.
-     * @return Uma <code>List<Peca></code>
-     */
-//    private List<Peca> getTime() {
-//        Component[] todasAsPecas = ((JLayeredPane) ((Component) this.getParent()).getParent()).getComponentsInLayer(Tabuleiro.LAYER_POSICAO);
-//        List<Peca> pecasTime = new ArrayList<Peca>();
-//
-//        for (int i = 0; i < todasAsPecas.length; i++) {
-//            Posicao pos = (Posicao) todasAsPecas[i];
-//            if (pos.getComponentCount() > 0) {
-//                Peca pca = (Peca) pos.getComponent(0);
-//                if (pca.getExercito().equals(exercito)) {
-//                    pecasTime.add(pca);
-//                }
-//            }
-//        }
-//
-//        return pecasTime;
-//    }
-    /**
-     * Método acionado no evento mouseReleased da implementação da Interface <code>MouseListener</code>.
-     * Garante que somente uma peça (Classe que extende JToggleButton) será selecionada.
-     */
-//    protected void garantirUnicidadeSelecao() {
-//        List<Peca> todasAsPecas = new ArrayList<Peca>();
-//        todasAsPecas.addAll(Tabuleiro.getInstance().getPecasTimeAzul());
-//        todasAsPecas.addAll(Tabuleiro.getInstance().getPecasTimeVerm());
-//
-//        for (Peca p : todasAsPecas) {
-//            Peca b = (Peca) p;
-//            if (p.equals(this)) {
-//                b.setSelected(true);
-//            } else {
-//                b.setSelected(false);
-//                
-//            }
-//        }
-//        repaint();
-//    }
     @Override
     public int hashCode() {
         int hash = 7;
@@ -167,22 +124,10 @@ public abstract class Peca extends JToggleButton {
     public void setId(String id) {
         this.id = this.valor + "-" + id;
     }
-
-    /**
-     * Retorna uma descrição da peça. Essa descrição é composta pelo título
-     * da peça (Sargento, General, Capitão, etc) concatenado com o seu valor
-     * (2, 9 ,6, etc). Essa descrição é utilizada para preencher o rótulo do
-     * componente
-     * @return Uma <code>String</code> com a descrição da peça
-     */
-
-    public String getDescricao() {
-        return this.titulo + "(" + this.valor + ")";
-    }
     
     @Override
     public String toString() {
-        return "Peça: " + getDescricao() + "Exército: " + getExercito().toString();
+        return "Peça: " + this.titulo + "(" + this.valor + ")" + " Exército: " + getExercito().toString();
     }
 
     public abstract void pecaMouseReleased(MouseEvent evt);

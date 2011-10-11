@@ -334,7 +334,7 @@ public class Tabuleiro extends JLayeredPane {
                 if (peca.getExercito().equals(exercito)) {
                     peca.setEnabled(false);
                     peca.setFocusable(false);
-                    peca.setText("");
+                    //peca.setText("");
                 }
             }
         }
@@ -348,7 +348,7 @@ public class Tabuleiro extends JLayeredPane {
                 Peca peca = (Peca) posicao.getComponent(0);
                 if (peca.getExercito().equals(exercito)) {
                     peca.setEnabled(true);
-                    peca.setText(peca.getDescricao());
+                    peca.setOpaque(false);
                 }
             }
         }

@@ -4,6 +4,7 @@
  */
 package br.edu.unijorge.entidade;
 
+import br.edu.unijorge.form.MainForm;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -46,6 +47,7 @@ public class PecaMovel extends Peca {
         if (isEnabled()) {
             Container parent;
             Component posicao;
+            MainForm mf;
 
             posicao = (Component) getParent();
 
@@ -54,6 +56,8 @@ public class PecaMovel extends Peca {
                 if (null != parent) {
                     try {
                         ((Tabuleiro) parent).setPosSelec((Posicao) posicao);
+                        mf = (MainForm)parent.getParent().getParent().getParent().getParent();
+                        mf.getJlJogadorInfo().setText(this.toString());
                     } catch (ClassCastException ex) {
                         return;
                     }
