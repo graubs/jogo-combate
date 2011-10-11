@@ -5,6 +5,7 @@ import br.edu.unijorge.constante.EntidadesImoveis;
 import br.edu.unijorge.constante.EntidadesMoveis;
 import br.edu.unijorge.constante.PosicoesInvalidas;
 import br.edu.unijorge.exception.PecaException;
+import br.edu.unijorge.form.MainForm;
 import br.edu.unijorge.util.UtilX;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -37,15 +38,22 @@ public class Tabuleiro extends JLayeredPane {
     private ButtonGroup pecasTimeVerm;
     private Exercito exercitoAtual;
     private Exercito exercitoAnt;
+    private boolean firstRun;
 
     public Tabuleiro() {
+        this.firstRun = true;
         setBounds(0, 0, ALTURA_PADRAO, LARGURA_PADRAO);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Image img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_TABULEIRO)).getImage();
+        Image img;
+        if(firstRun){
+            img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_APRESENTACAO)).getImage();
+        }else{
+            img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_TABULEIRO)).getImage();
+        }
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
@@ -245,6 +253,16 @@ public class Tabuleiro extends JLayeredPane {
                     "Jogada encerrada",
                     JOptionPane.INFORMATION_MESSAGE);
         }
+        try{
+            MainForm mf = (MainForm)getParent().getParent().getParent().getParent();
+            mf.getJlJogadorInfo().setIcon(null);
+            mf.getJlJogadorInfo().setText(null);
+        }catch(ClassCastException ex){
+
+        }catch(NullPointerException ex2){
+            
+        }
+
         habilitarExercito(this.exercitoAtual);
         repaint();
     }
@@ -363,6 +381,7 @@ public class Tabuleiro extends JLayeredPane {
     }
 
     public void iniciarJogo() {
+        firstRun = false;
         pecasTimeAzul = new ButtonGroup();
         pecasTimeVerm = new ButtonGroup();
         exercitoAnt = new Exercito(Exercito.EXERCITO_VERMELHO);

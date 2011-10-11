@@ -8,6 +8,7 @@ import br.edu.unijorge.form.MainForm;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -57,6 +58,11 @@ public class PecaMovel extends Peca {
                     try {
                         ((Tabuleiro) parent).setPosSelec((Posicao) posicao);
                         mf = (MainForm)parent.getParent().getParent().getParent().getParent();
+                        try{
+                            mf.getJlJogadorInfo().setIcon(getInsignia());
+                        }catch(NullPointerException ex){
+                            mf.getJlJogadorInfo().setIcon(null);
+                        }
                         mf.getJlJogadorInfo().setText(this.toString());
                     } catch (ClassCastException ex) {
                         return;

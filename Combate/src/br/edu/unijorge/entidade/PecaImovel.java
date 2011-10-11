@@ -47,6 +47,7 @@ public class PecaImovel extends Peca {
                 if (null != parent) {
                     try {
                         mf = (MainForm)parent.getParent().getParent().getParent().getParent();
+                        mf.getJlJogadorInfo().setIcon(null);
                         mf.getJlJogadorInfo().setText(this.toString());
                     } catch (ClassCastException ex) {
                         return;
