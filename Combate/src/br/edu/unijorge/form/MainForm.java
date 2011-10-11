@@ -15,6 +15,7 @@ import br.edu.unijorge.util.UtilX;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +26,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public static final int 
             LARGURA_PADRAO = 660,
-            ALTURA_PADRAO = 700,
+            ALTURA_PADRAO = 740,
             LAYER_TABULEIRO = 0,
             LAYER_MSG = 400;
 
@@ -54,6 +55,7 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jlJogadorInfo = new javax.swing.JLabel();
         tabuleiro = new br.edu.unijorge.entidade.Tabuleiro();
         jmbMenu = new javax.swing.JMenuBar();
         jmJogo = new javax.swing.JMenu();
@@ -75,6 +77,11 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
+
+        jlJogadorInfo.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jlJogadorInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(jlJogadorInfo);
+        jlJogadorInfo.setBounds(0, 650, 650, 30);
         getContentPane().add(tabuleiro);
         tabuleiro.setBounds(0, 0, 650, 650);
 
@@ -203,7 +210,16 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
 
+    public JLabel getJlJogadorInfo() {
+        return jlJogadorInfo;
+    }
+
+    public void setJlJogadorInfo(JLabel jlJogadorInfo) {
+        this.jlJogadorInfo = jlJogadorInfo;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jlJogadorInfo;
     private javax.swing.JMenu jmAjuda;
     private javax.swing.JMenu jmJogo;
     private javax.swing.JMenuBar jmbMenu;

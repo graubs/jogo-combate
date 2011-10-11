@@ -22,7 +22,7 @@ public class CombateProtocol {
         Posicao ps = t.getPosicao(params[IDX_POSICAO]);
         try{
             pc = (Peca)ps.getComponent(0);
-            output = pc.getDescricao();
+            output = pc.toString();
         }catch(NullPointerException ex){
             output = ps.getNome();
         }

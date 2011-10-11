@@ -33,6 +33,7 @@ public class Posicao extends JPanel implements MouseListener {
         setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
         setBorder(LineBorder.createBlackLineBorder());
         setLayout(new GridLayout());
+        setOpaque(false);
         addMouseListener(this);
     }
 

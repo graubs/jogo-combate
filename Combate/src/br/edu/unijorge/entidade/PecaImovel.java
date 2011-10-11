@@ -4,6 +4,9 @@
  */
 package br.edu.unijorge.entidade;
 
+import br.edu.unijorge.form.MainForm;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.MouseEvent;
 
 /**
@@ -32,6 +35,24 @@ public class PecaImovel extends Peca {
 
     @Override
     public void pecaMouseReleased(MouseEvent evt) {
-        return;
+        if (isEnabled()) {
+            Container parent;
+            Component posicao;
+            MainForm mf;
+
+            posicao = (Component) getParent();
+
+            if (null != posicao) {
+                parent = (Container) posicao.getParent();
+                if (null != parent) {
+                    try {
+                        mf = (MainForm)parent.getParent().getParent().getParent().getParent();
+                        mf.getJlJogadorInfo().setText(this.toString());
+                    } catch (ClassCastException ex) {
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
