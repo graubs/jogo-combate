@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="COMBATE*** | Regras"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -83,9 +84,8 @@
                 <Property name="rows" type="int" value="5"/>
                 <Property name="text" type="java.lang.String" value="-REGRAS&#xa;&#xa;-OBJETIVO DO JOGO&#xa;Cada um comanda seu ex&#xe9;rcito, que tem por objetivo capturar a bandeira do ex&#xe9;rcito inimigo. &#xa;Uma outra forma de vencer &#xe9; deixando o advers&#xe1;rio sem movimentos legais (derrotando todas as suas pe&#xe7;as m&#xf3;veis, por exemplo).&#xa;&#xa;-PE&#xc7;AS&#xa;Existem dois tipos de pe&#xe7;as: As m&#xf3;veis e as im&#xf3;veis.&#xa;&#xa;Os ex&#xe9;rcitos s&#xe3;o distintos pelas cores azul e vermelho. As im&#xf3;veis s&#xe3;o uma bandeira e seis bombas.&#xa;&#xa;   * A bandeira deve ficar escondida, pois quando &#xe9; capturada pelo advers&#xe1;rio, o jogo acaba e o que teve sua bandeira capturada perde.&#xa;    *As bombas s&#xe3;o pe&#xe7;as que derrotam qualquer outra, com exce&#xe7;&#xe3;o do cabo armeiro.&#xa;&#xa;As pe&#xe7;as m&#xf3;veis s&#xe3;o usadas para invadir o territ&#xf3;rio advers&#xe1;rio, derrotar suas pe&#xe7;as e capturar a bandeira, sendo esta, o objetivo do jogo. &#xa;Cada uma tem um n&#xfa;mero, que representa seu poder. Quanto maior o n&#xfa;mero, mais forte &#xe9;.&#xa;&#xa;    *Um espi&#xe3;o, 1, que &#xe9; a &#xfa;nica pe&#xe7;a que pode derrotar o marechal&#xa;    *Oito soldados, 2, que podem mover mais de uma casa por vez, a corrida. Um soldado n&#xe3;o pode correr e atacar na mesma vez.&#xa;    *Cinco cabos armeiros, 3, que podem desarmar as bombas.&#xa;    *Quatro sargentos, 4.&#xa;    *Quatro tenentes, 5.&#xa;    *Quatro capit&#xe3;es, 6.&#xa;    *Tr&#xea;s majores, 7.&#xa;    *Dois coron&#xe9;is, 8.&#xa;    *Um general, 9.&#xa;    *Um marechal, 10, que pode ser morto pelo espi&#xe3;o.&#xa;&#xa;-O ESPI&#xc3;O E O MARECHAL&#xa;&#xa;O espi&#xe3;o &#xe9; a pe&#xe7;a mais fraca do jogo, no n&#xed;vel 1, e o marechal a mais forte, no n&#xed;vel 10. &#xa;Se um espi&#xe3;o atacar um marechal, este morre, mas se o contr&#xe1;rio acontecer, um espi&#xe3;o for atacado por um marechal, &#xe9; aquele que morre. &#xa;Ou seja, entre o espi&#xe3;o e o marechal, o que atacar vence."/>
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
-                <Property name="autoscrolls" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor em forma de m&#xe3;o"/>
+                  <Color id="Default Cursor"/>
                 </Property>
               </Properties>
             </Component>

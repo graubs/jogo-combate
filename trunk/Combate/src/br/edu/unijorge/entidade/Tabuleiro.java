@@ -14,6 +14,8 @@ import java.awt.Container;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -26,13 +28,11 @@ import javax.swing.JOptionPane;
  */
 public class Tabuleiro extends JLayeredPane {
 
-    public static final int 
-            LARGURA_PADRAO = 650,
+    public static final int LARGURA_PADRAO = 650,
             ALTURA_PADRAO = 650,
             LAYER_BACKGROUND = 0,
             LAYER_POSICAO = 400,
             LAYER_SLOT = 800;
-    
     private Posicao posSelec;
     private ButtonGroup pecasTimeAzul;
     private ButtonGroup pecasTimeVerm;
@@ -49,14 +49,14 @@ public class Tabuleiro extends JLayeredPane {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Image img;
-        if(firstRun){
+        if (firstRun) {
             img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_APRESENTACAO)).getImage();
-        }else{
+        } else {
             img = new ImageIcon(getClass().getResource(Constante.IMAGEM_FUNDO_TABULEIRO)).getImage();
         }
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
     }
-    
+
     private void construirPecas() {
         PecaMovel pecaMovel;
         //Constroi as pecas moveis
@@ -176,17 +176,17 @@ public class Tabuleiro extends JLayeredPane {
     public void autoPosicionarPecas() {
 
         desordenarPecas();
-        
+
         int x = 0;
         Enumeration<AbstractButton> pecasAzul = pecasTimeAzul.getElements();
-        while(pecasAzul.hasMoreElements()){
-            ((Posicao)getComponentsInLayer(LAYER_POSICAO)[x]).add((Peca)pecasAzul.nextElement());
+        while (pecasAzul.hasMoreElements()) {
+            ((Posicao) getComponentsInLayer(LAYER_POSICAO)[x]).add((Peca) pecasAzul.nextElement());
             x++;
         }
-        
+
         x = 99;
         Enumeration<AbstractButton> pecasVerm = pecasTimeVerm.getElements();
-        while(pecasVerm.hasMoreElements()) {
+        while (pecasVerm.hasMoreElements()) {
             ((Posicao) getComponentsInLayer(LAYER_POSICAO)[x]).add(pecasVerm.nextElement());
             x--;
         }
@@ -201,12 +201,12 @@ public class Tabuleiro extends JLayeredPane {
     public ButtonGroup getPecasTimeVerm() {
         return pecasTimeVerm;
     }
-    
-    public void setPecasTimeAzul(ButtonGroup pecas){
+
+    public void setPecasTimeAzul(ButtonGroup pecas) {
         this.pecasTimeAzul = pecas;
     }
-    
-    public void setPecasTimeVerm(ButtonGroup pecas){
+
+    public void setPecasTimeVerm(ButtonGroup pecas) {
         this.pecasTimeVerm = pecas;
     }
 
@@ -233,12 +233,10 @@ public class Tabuleiro extends JLayeredPane {
     public void setExercitoAtual(Exercito exercitoAtual) {
         this.exercitoAtual = exercitoAtual;
     }
-    
-    private void alternarExercito(){
+
+    private void alternarExercito() {
         alternarExercito(false);
     }
-    
-    
 
     private void alternarExercito(boolean firstRun) {
         Exercito atual = this.exercitoAnt;
@@ -253,14 +251,12 @@ public class Tabuleiro extends JLayeredPane {
                     "Jogada encerrada",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        try{
-            MainForm mf = (MainForm)getParent().getParent().getParent().getParent();
+        try {
+            MainForm mf = (MainForm) getParent().getParent().getParent().getParent();
             mf.getJlJogadorInfo().setIcon(null);
             mf.getJlJogadorInfo().setText(null);
-        }catch(ClassCastException ex){
-
-        }catch(NullPointerException ex2){
-            
+        } catch (ClassCastException ex) {
+        } catch (NullPointerException ex2) {
         }
 
         habilitarExercito(this.exercitoAtual);
@@ -287,6 +283,7 @@ public class Tabuleiro extends JLayeredPane {
 
     private boolean confrontar(PecaMovel peca, Posicao posDestino) {
         Peca pecaAtacada = (Peca) posDestino.getComponent(0);
+
         int valorPeca = peca.getValor();
         int valorPecaAtacada = pecaAtacada.getValor();
 
@@ -300,22 +297,26 @@ public class Tabuleiro extends JLayeredPane {
             return true;
         } else if (valorPecaAtacada == EntidadesImoveis.BOMBA.getValor()) {
             if (valorPeca == EntidadesMoveis.CABO_ARMEIRO.getValor()) {
+                revelarPeca(peca, pecaAtacada, 1);
                 posDestino.removeAll();
                 ((Posicao) peca.getParent()).removeAll();
                 posDestino.add(peca);
             } else {
+                revelarPeca(peca, pecaAtacada, 2);
                 peca.getParent().removeAll();
             }
-        } else if ((valorPecaAtacada == EntidadesMoveis.ESPIAO.getValor() && valorPeca == EntidadesMoveis.MARECHAL.getValor())
-                || (valorPeca == EntidadesMoveis.ESPIAO.getValor() && valorPecaAtacada == EntidadesMoveis.MARECHAL.getValor())) {
+        } else if ((valorPeca == EntidadesMoveis.ESPIAO.getValor() && valorPecaAtacada == EntidadesMoveis.MARECHAL.getValor())) {
+            revelarPeca(peca, pecaAtacada, 1);
             posDestino.removeAll();
             ((Posicao) peca.getParent()).removeAll();
             posDestino.add(peca);
-        } else if (valorPeca == valorPecaAtacada || valorPeca > valorPecaAtacada) {
+        } else if (valorPeca >= valorPecaAtacada) {
+            revelarPeca(peca, pecaAtacada, 1);
             posDestino.removeAll();
             ((Posicao) peca.getParent()).removeAll();
             posDestino.add(peca);
         } else if (valorPeca < valorPecaAtacada) {
+            revelarPeca(peca, pecaAtacada, 2);
             peca.getParent().removeAll();
         }
 
@@ -330,6 +331,16 @@ public class Tabuleiro extends JLayeredPane {
         }
 
         return false;
+    }
+
+    private void revelarPeca(Peca pecaOrigem, Peca pecaDestino, int vencedor){
+        pecaDestino.setEnabled(true);
+        pecaDestino.setOpaque(false);
+        JOptionPane.showMessageDialog(
+                this,
+                (vencedor == 1 ? pecaOrigem.getTitulo() + " (" + pecaOrigem.getExercito().getNome() + ")" : pecaDestino.getTitulo() + " (" + pecaDestino.getExercito().getNome() + ")") + " venceu.",
+                "",
+                JOptionPane.WARNING_MESSAGE);
     }
 
     private int getQtdCasasDeslocadas(PecaMovel peca, Posicao posDestino) {
@@ -352,7 +363,6 @@ public class Tabuleiro extends JLayeredPane {
                 if (peca.getExercito().equals(exercito)) {
                     peca.setEnabled(false);
                     peca.setFocusable(false);
-                    //peca.setText("");
                 }
             }
         }
@@ -430,26 +440,26 @@ public class Tabuleiro extends JLayeredPane {
         }
         return false;
     }
-    
-    private void desordenarPecas(){
+
+    private void desordenarPecas() {
         //Exercito Azul
         List lPecasAzul = Collections.list(pecasTimeAzul.getElements());
         Collections.shuffle(lPecasAzul);
-        
+
         pecasTimeAzul = new ButtonGroup();
-        
-        for(Object p : lPecasAzul){
-            pecasTimeAzul.add((AbstractButton)p);
+
+        for (Object p : lPecasAzul) {
+            pecasTimeAzul.add((AbstractButton) p);
         }
-        
+
         //Exercito Vermelho
         List lPecasVerm = Collections.list(pecasTimeVerm.getElements());
         Collections.shuffle(lPecasVerm);
-        
+
         pecasTimeVerm = new ButtonGroup();
-        
-        for(Object p : lPecasVerm){
-            pecasTimeVerm.add((AbstractButton)p);
+
+        for (Object p : lPecasVerm) {
+            pecasTimeVerm.add((AbstractButton) p);
         }
     }
 
@@ -458,8 +468,8 @@ public class Tabuleiro extends JLayeredPane {
         this.setLayer(c, layer);
         return c;
     }
-    
-    public void addPecasSlot(Container slot, ButtonGroup listPecas){
+
+    public void addPecasSlot(Container slot, ButtonGroup listPecas) {
         //Limpa o slot
         slot.removeAll();
 
@@ -472,14 +482,22 @@ public class Tabuleiro extends JLayeredPane {
                 slot.add(pos);
             }
         }
-        
+
         int x = 0;
         Enumeration<AbstractButton> pecas = listPecas.getElements();
-        while(pecas.hasMoreElements()){
-            ((Posicao)slot.getComponent(x)).add((Peca)pecas.nextElement());
+        while (pecas.hasMoreElements()) {
+            ((Posicao) slot.getComponent(x)).add((Peca) pecas.nextElement());
             x++;
         }
         slot.getParent().repaint();
-        
+
+    }
+
+    private void aguardar(long milis) {
+        try {
+            Thread.sleep(milis);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Tabuleiro.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
