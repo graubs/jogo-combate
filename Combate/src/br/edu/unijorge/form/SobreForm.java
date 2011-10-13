@@ -63,13 +63,15 @@ public class SobreForm extends DialogForm {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("COMBATE*** | Sobre...");
         getContentPane().setLayout(null);
 
         jlTitulo.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jlTitulo.setText("COMBATE");
         getContentPane().add(jlTitulo);
-        jlTitulo.setBounds(12, 48, 178, 42);
+        jlTitulo.setBounds(12, 48, 210, 42);
 
+        jlVersao.setFont(new java.awt.Font("Ubuntu", 3, 13)); // NOI18N
         jlVersao.setText("Versão:");
         getContentPane().add(jlVersao);
         jlVersao.setBounds(12, 226, 320, 16);
@@ -97,15 +99,15 @@ public class SobreForm extends DialogForm {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(240, 60, 16, 16);
+        jLabel1.setBounds(260, 60, 16, 16);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(200, 60, 16, 16);
+        jLabel2.setBounds(220, 60, 16, 16);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/edu/unijorge/imagens/combateIcon.png"))); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(220, 60, 16, 16);
+        jLabel3.setBounds(240, 60, 16, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

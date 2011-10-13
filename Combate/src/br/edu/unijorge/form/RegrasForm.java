@@ -40,6 +40,7 @@ public class RegrasForm extends DialogForm {
         jbFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("COMBATE*** | Regras");
 
         jspRegras.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jspRegras.setEnabled(false);
@@ -47,13 +48,12 @@ public class RegrasForm extends DialogForm {
 
         jtaRegras.setColumns(20);
         jtaRegras.setEditable(false);
-        jtaRegras.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        jtaRegras.setFont(new java.awt.Font("Arial", 0, 13));
         jtaRegras.setLineWrap(true);
         jtaRegras.setRows(5);
         jtaRegras.setText("-REGRAS\n\n-OBJETIVO DO JOGO\nCada um comanda seu exército, que tem por objetivo capturar a bandeira do exército inimigo. \nUma outra forma de vencer é deixando o adversário sem movimentos legais (derrotando todas as suas peças móveis, por exemplo).\n\n-PEÇAS\nExistem dois tipos de peças: As móveis e as imóveis.\n\nOs exércitos são distintos pelas cores azul e vermelho. As imóveis são uma bandeira e seis bombas.\n\n   * A bandeira deve ficar escondida, pois quando é capturada pelo adversário, o jogo acaba e o que teve sua bandeira capturada perde.\n    *As bombas são peças que derrotam qualquer outra, com exceção do cabo armeiro.\n\nAs peças móveis são usadas para invadir o território adversário, derrotar suas peças e capturar a bandeira, sendo esta, o objetivo do jogo. \nCada uma tem um número, que representa seu poder. Quanto maior o número, mais forte é.\n\n    *Um espião, 1, que é a única peça que pode derrotar o marechal\n    *Oito soldados, 2, que podem mover mais de uma casa por vez, a corrida. Um soldado não pode correr e atacar na mesma vez.\n    *Cinco cabos armeiros, 3, que podem desarmar as bombas.\n    *Quatro sargentos, 4.\n    *Quatro tenentes, 5.\n    *Quatro capitães, 6.\n    *Três majores, 7.\n    *Dois coronéis, 8.\n    *Um general, 9.\n    *Um marechal, 10, que pode ser morto pelo espião.\n\n-O ESPIÃO E O MARECHAL\n\nO espião é a peça mais fraca do jogo, no nível 1, e o marechal a mais forte, no nível 10. \nSe um espião atacar um marechal, este morre, mas se o contrário acontecer, um espião for atacado por um marechal, é aquele que morre. \nOu seja, entre o espião e o marechal, o que atacar vence.");
         jtaRegras.setWrapStyleWord(true);
-        jtaRegras.setAutoscrolls(false);
-        jtaRegras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jtaRegras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jspRegras.setViewportView(jtaRegras);
 
         javax.swing.GroupLayout jpRegrasLayout = new javax.swing.GroupLayout(jpRegras);

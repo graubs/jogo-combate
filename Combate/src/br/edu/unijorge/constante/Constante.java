@@ -22,9 +22,10 @@ public abstract class Constante {
     //Imagens utilizadas pela aplicação
     public static final String PATH_IMAGENS = "/br/edu/unijorge/imagens/";
     public static final String EXTENSAO_IMAGEM = ".png";
-    public static final String IMAGEM_FUNDO_TABULEIRO = "/br/edu/unijorge/imagens/Terreno-Combate.png";
-     public static final String IMAGEM_FUNDO_APRESENTACAO = "/br/edu/unijorge/imagens/Imagem-Main.png";
-    public static final String IMAGEM_FUNDO_QUARTEL = "/br/edu/unijorge/imagens/Quartel-Combate.png";
-    public static final String IMAGEM_ICONE = "/br/edu/unijorge/imagens/combateIcon.png";
+    public static final String IMAGEM_FUNDO_TABULEIRO = PATH_IMAGENS + "Terreno-Combate" + EXTENSAO_IMAGEM;
+    public static final String IMAGEM_FUNDO_APRESENTACAO = PATH_IMAGENS + "Imagem-Main"  + EXTENSAO_IMAGEM;
+    public static final String IMAGEM_SANGUE = PATH_IMAGENS + "Sangue"  + EXTENSAO_IMAGEM;
+    public static final String IMAGEM_FUNDO_QUARTEL = PATH_IMAGENS + "Quartel-Combate"  + EXTENSAO_IMAGEM;
+    public static final String IMAGEM_ICONE = PATH_IMAGENS + "combateIcon"  + EXTENSAO_IMAGEM;
 
 }
