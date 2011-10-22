@@ -1,6 +1,7 @@
 package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.constante.Constante;
+import br.edu.unijorge.util.UtilX;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -53,14 +54,14 @@ public abstract class Peca extends JToggleButton {
 
             try {
                 Image i = (new ImageIcon(getClass().getResource(
-                        Constante.PATH_IMAGENS
+                        Constante.PATH_IMAGEM
                         + getExercito().getCorExercito() + "-"
                         + getTitulo() + Constante.EXTENSAO_IMAGEM))).getImage();
                 setOpaque(false);
                 g.drawImage(i, 0, 0, this.getWidth(), this.getHeight(), this);
                         
             }catch(NullPointerException ex){
-                System.out.println(Constante.PATH_IMAGENS
+                System.out.println(Constante.PATH_IMAGEM
                         + getExercito().getCorExercito() + "-"
                         + getTitulo() + Constante.EXTENSAO_IMAGEM);
                 ex.printStackTrace();
@@ -132,9 +133,15 @@ public abstract class Peca extends JToggleButton {
 
     public ImageIcon getInsignia(){
         return new ImageIcon(getClass().getResource(
-                        Constante.PATH_IMAGENS
+                        Constante.PATH_IMAGEM
                         + "Insignia-"
                         + getTitulo() + Constante.EXTENSAO_IMAGEM));
+    }
+    
+    public void tocarSom(){
+        UtilX.tocarSom(Constante.PATH_AUDIO
+                        + "Som-"
+                        + getTitulo() + Constante.EXTENSAO_AUDIO);
     }
 
     public abstract void pecaMouseReleased(MouseEvent evt);

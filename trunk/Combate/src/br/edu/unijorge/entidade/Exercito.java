@@ -4,6 +4,8 @@
  */
 package br.edu.unijorge.entidade;
 
+import br.edu.unijorge.constante.Constante;
+import br.edu.unijorge.util.UtilX;
 import java.awt.Color;
 
 /**
@@ -52,6 +54,12 @@ public class Exercito {
     @Override
     public String toString() {
         return this.nome + " (" + String.valueOf(this.id) + ")";
+    }
+    
+    public void tocarSom(){
+        UtilX.tocarSom(Constante.PATH_AUDIO
+                        + "SomExercito-"
+                        + getCorExercito() + Constante.EXTENSAO_IMAGEM);
     }
             
     public long getId() {
