@@ -288,6 +288,7 @@ public class Tabuleiro extends JLayeredPane {
         int valorPecaAtacada = pecaAtacada.getValor();
 
         if (valorPecaAtacada == EntidadesImoveis.BANDEIRA.getValor()) {
+            revelarJogo();
             JOptionPane.showMessageDialog(
                     this,
                     "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!",
@@ -297,30 +298,36 @@ public class Tabuleiro extends JLayeredPane {
             return true;
         } else if (valorPecaAtacada == EntidadesImoveis.BOMBA.getValor()) {
             if (valorPeca == EntidadesMoveis.CABO_ARMEIRO.getValor()) {
+                peca.tocarSom();
                 revelarPeca(peca, pecaAtacada, 1);
                 posDestino.removeAll();
                 ((Posicao) peca.getParent()).removeAll();
                 posDestino.add(peca);
             } else {
+                pecaAtacada.tocarSom();
                 revelarPeca(peca, pecaAtacada, 2);
                 peca.getParent().removeAll();
             }
         } else if ((valorPeca == EntidadesMoveis.ESPIAO.getValor() && valorPecaAtacada == EntidadesMoveis.MARECHAL.getValor())) {
+            peca.tocarSom();
             revelarPeca(peca, pecaAtacada, 1);
             posDestino.removeAll();
             ((Posicao) peca.getParent()).removeAll();
             posDestino.add(peca);
         } else if (valorPeca >= valorPecaAtacada) {
+            peca.tocarSom();
             revelarPeca(peca, pecaAtacada, 1);
             posDestino.removeAll();
             ((Posicao) peca.getParent()).removeAll();
             posDestino.add(peca);
         } else if (valorPeca < valorPecaAtacada) {
+            pecaAtacada.tocarSom();
             revelarPeca(peca, pecaAtacada, 2);
             peca.getParent().removeAll();
         }
 
         if (!temPecasMoveis(pecaAtacada.getExercito())) {
+            revelarJogo();
             JOptionPane.showMessageDialog(
                     this,
                     "O Exército " + pecaAtacada.getExercito().getNome()
@@ -341,6 +348,12 @@ public class Tabuleiro extends JLayeredPane {
                 (vencedor == 1 ? pecaOrigem.getTitulo() + " (" + pecaOrigem.getExercito().getNome() + ")" : pecaDestino.getTitulo() + " (" + pecaDestino.getExercito().getNome() + ")") + " venceu.",
                 "",
                 JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void revelarJogo(){
+        habilitarExercito(exercitoAnt);
+        habilitarExercito(exercitoAtual);
+        repaint();
     }
 
     private int getQtdCasasDeslocadas(PecaMovel peca, Posicao posDestino) {
@@ -399,6 +412,7 @@ public class Tabuleiro extends JLayeredPane {
         construirPecas();
         construirPosicoes();
         autoPosicionarPecas();
+        UtilX.tocarSom(Constante.AUDIO_INICIO_BATALHA);
     }
 
     private boolean isFaixaValida(PecaMovel peca, Posicao posDestino) {
