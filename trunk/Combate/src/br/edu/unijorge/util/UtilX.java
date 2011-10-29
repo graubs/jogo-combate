@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.unijorge.util;
 
 import java.awt.Component;
@@ -18,7 +14,7 @@ import java.util.logging.Logger;
 import javazoom.jl.player.Player;
 
 /**
- *
+ * Classe que contém métodos estáticos utilitários.
  * @author Glauber
  */
 public abstract class UtilX {
@@ -110,21 +106,6 @@ public abstract class UtilX {
         Toolkit.getDefaultToolkit().beep();
     }
 
-//    public static synchronized void tocarSom(final String file) {
-//        new Thread(new Runnable() {
-//            public void run() {
-//                try {
-//                    Clip clip = AudioSystem.getClip();
-//                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-//                            getClass().getResource(file));
-//                    clip.open(inputStream);
-//                    clip.start();
-//                } catch (Exception e) {
-//                    System.err.println(e.getMessage());
-//                }
-//            }
-//        }).start();
-//    }
     public synchronized static void tocarSom(final String file) {
 
         new Thread(new Runnable() {
@@ -133,11 +114,8 @@ public abstract class UtilX {
             public void run() {
                 try {
                     InputStream in = (InputStream) (new FileInputStream(UtilX.class.getResource(file).getFile()));
-
                     Player p = new Player(in);
-
                     p.play();
-
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

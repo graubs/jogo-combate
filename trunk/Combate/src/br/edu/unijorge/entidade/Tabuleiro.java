@@ -24,7 +24,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Classe que abstrai o tabuleiro do jogo. Controla todas as operações que envolvem
+ * a regra de negócio da aplicação, movimentação de peça, confronto e validações
  * @author Glauber
  */
 public class Tabuleiro extends JLayeredPane {
@@ -41,6 +42,7 @@ public class Tabuleiro extends JLayeredPane {
     private Exercito exercitoAnt;
     private boolean firstRun;
 
+    //Construtor da Classe
     public Tabuleiro() {
         this.firstRun = true;
         setBounds(0, 0, ALTURA_PADRAO, LARGURA_PADRAO);
@@ -290,8 +292,9 @@ public class Tabuleiro extends JLayeredPane {
 
         if (valorPecaAtacada == EntidadesImoveis.BANDEIRA.getValor()) {
             revelarJogo();
-            if(JOptionPane.showConfirmDialog(this, "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!", "Fim de Jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-              iniciarJogo();  
+            if(JOptionPane.showConfirmDialog(this, "Parabéns! O exército " + peca.getExercito().getNome() + " venceu! Deseja jogar novamente?", "Fim de Jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                iniciarJogo();
+              ((JFrame)this.getParent()).repaint();
             }else{
                 ((JFrame)this.getParent()).dispose();
             }
@@ -337,10 +340,11 @@ public class Tabuleiro extends JLayeredPane {
             if(JOptionPane.showConfirmDialog(
                     this, "O Exército " + pecaAtacada.getExercito().getNome()
                     + " não possui movimentos disponíveis. O Exército "
-                    + peca.getExercito().getNome() + " venceu.", 
+                    + peca.getExercito().getNome() + " venceu. Deseja jogar novamente?", 
                     "Fim de Jogo", 
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-              iniciarJogo();  
+              iniciarJogo();
+              ((JFrame)this.getParent()).repaint();
             }else{
                 ((JFrame)this.getParent()).dispose();
             }
