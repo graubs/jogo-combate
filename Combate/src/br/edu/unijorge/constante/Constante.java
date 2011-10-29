@@ -1,13 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.unijorge.constante;
 
 import java.awt.Font;
 
 /**
- *
+ * Definição de constantes utilizadas pela a plicação.
  * @author Glauber
  */
 public abstract class Constante {
