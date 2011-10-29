@@ -8,14 +8,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javazoom.jl.player.Player;
 
 /**
  *
@@ -40,7 +40,7 @@ public abstract class UtilX {
                 (getScreenWidth().intValue() / 2) - (frame.getWidth() / 2),
                 ((getScreenHeight().intValue()) / 2) - (frame.getHeight() / 2));
     }
-    
+
     public static void centerX(Frame frame) {
         frame.setLocation(
                 (getScreenWidth().intValue() / 2) - (frame.getWidth() / 2),
@@ -109,18 +109,37 @@ public abstract class UtilX {
     public static void beep() {
         Toolkit.getDefaultToolkit().beep();
     }
-    
-    public static synchronized void tocarSom(final String file) {
+
+//    public static synchronized void tocarSom(final String file) {
+//        new Thread(new Runnable() {
+//            public void run() {
+//                try {
+//                    Clip clip = AudioSystem.getClip();
+//                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+//                            getClass().getResource(file));
+//                    clip.open(inputStream);
+//                    clip.start();
+//                } catch (Exception e) {
+//                    System.err.println(e.getMessage());
+//                }
+//            }
+//        }).start();
+//    }
+    public synchronized static void tocarSom(final String file) {
+
         new Thread(new Runnable() {
+
+            @Override
             public void run() {
                 try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            getClass().getResource(file));
-                    clip.open(inputStream);
-                    clip.start();
+                    InputStream in = (InputStream) (new FileInputStream(UtilX.class.getResource(file).getFile()));
+
+                    Player p = new Player(in);
+
+                    p.play();
+
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    System.out.println(e.getMessage());
                 }
             }
         }).start();

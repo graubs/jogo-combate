@@ -1,6 +1,0 @@
-Som-Major.aiff
-Som-Tenente.aiff
-Som-Sargento.aiff
-Som-General.aiff
-Som-Espiao.aiff
-Som-Marechal.aiff

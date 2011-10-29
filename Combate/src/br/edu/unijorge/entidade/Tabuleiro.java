@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
@@ -289,11 +290,16 @@ public class Tabuleiro extends JLayeredPane {
 
         if (valorPecaAtacada == EntidadesImoveis.BANDEIRA.getValor()) {
             revelarJogo();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!",
-                    "Fim de Jogo.",
-                    JOptionPane.INFORMATION_MESSAGE);
+            if(JOptionPane.showConfirmDialog(this, "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!", "Fim de Jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+              iniciarJogo();  
+            }else{
+                ((JFrame)this.getParent()).dispose();
+            }
+//            JOptionPane.showMessageDialog(
+//                    this,
+//                    "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!",
+//                    "Fim de Jogo.",
+//                    JOptionPane.INFORMATION_MESSAGE);
 
             return true;
         } else if (valorPecaAtacada == EntidadesImoveis.BOMBA.getValor()) {
@@ -328,13 +334,24 @@ public class Tabuleiro extends JLayeredPane {
 
         if (!temPecasMoveis(pecaAtacada.getExercito())) {
             revelarJogo();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "O Exército " + pecaAtacada.getExercito().getNome()
+            if(JOptionPane.showConfirmDialog(
+                    this, "O Exército " + pecaAtacada.getExercito().getNome()
                     + " não possui movimentos disponíveis. O Exército "
-                    + peca.getExercito().getNome() + " venceu.",
-                    "Fim de jogo",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    + peca.getExercito().getNome() + " venceu.", 
+                    "Fim de Jogo", 
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+              iniciarJogo();  
+            }else{
+                ((JFrame)this.getParent()).dispose();
+            }
+            
+//            JOptionPane.showMessageDialog(
+//                    this,
+//                    "O Exército " + pecaAtacada.getExercito().getNome()
+//                    + " não possui movimentos disponíveis. O Exército "
+//                    + peca.getExercito().getNome() + " venceu.",
+//                    "Fim de jogo",
+//                    JOptionPane.INFORMATION_MESSAGE);
         }
 
         return false;
