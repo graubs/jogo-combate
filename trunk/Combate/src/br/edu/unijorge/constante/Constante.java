@@ -30,7 +30,7 @@ public abstract class Constante {
     
     //Audios utilizados pela aplicação
     public static final String PATH_AUDIO = "/br/edu/unijorge/audio/";
-    public static final String EXTENSAO_AUDIO = ".aiff";
+    public static final String EXTENSAO_AUDIO = ".mp3";
     public static final String AUDIO_INICIO_BATALHA = PATH_AUDIO + "Som-InicioBatalha" + EXTENSAO_AUDIO;
 
 }
