@@ -8,7 +8,6 @@ import br.edu.unijorge.form.MainForm;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 
 /**
  *

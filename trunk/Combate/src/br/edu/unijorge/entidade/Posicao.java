@@ -5,7 +5,6 @@
 package br.edu.unijorge.entidade;
 
 import br.edu.unijorge.exception.PecaException;
-import br.edu.unijorge.form.MainForm;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
