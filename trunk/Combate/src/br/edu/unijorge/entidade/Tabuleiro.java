@@ -166,9 +166,9 @@ public class Tabuleiro extends JLayeredPane {
                 }
                 alternarExercito();
                 repaint();
-            } else {
-                finalizarJogo();
-            }
+            } //else {
+                //finalizarJogo();
+            //}
         } else {
             throw new PecaException("Quantidade de casas deslocadas excede a máxima permitida.");
         }
@@ -293,17 +293,10 @@ public class Tabuleiro extends JLayeredPane {
         if (valorPecaAtacada == EntidadesImoveis.BANDEIRA.getValor()) {
             revelarJogo();
             if(JOptionPane.showConfirmDialog(this, "Parabéns! O exército " + peca.getExercito().getNome() + " venceu! Deseja jogar novamente?", "Fim de Jogo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                iniciarJogo();
-              ((JFrame)this.getParent()).repaint();
+                reiniciarJogo();
             }else{
-                ((JFrame)this.getParent()).dispose();
+                reiniciarJogo(false);
             }
-//            JOptionPane.showMessageDialog(
-//                    this,
-//                    "Parabéns! O exército " + peca.getExercito().getNome() + " venceu!",
-//                    "Fim de Jogo.",
-//                    JOptionPane.INFORMATION_MESSAGE);
-
             return true;
         } else if (valorPecaAtacada == EntidadesImoveis.BOMBA.getValor()) {
             if (valorPeca == EntidadesMoveis.CABO_ARMEIRO.getValor()) {
@@ -343,22 +336,26 @@ public class Tabuleiro extends JLayeredPane {
                     + peca.getExercito().getNome() + " venceu. Deseja jogar novamente?", 
                     "Fim de Jogo", 
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-              iniciarJogo();
-              ((JFrame)this.getParent()).repaint();
+              reiniciarJogo();
             }else{
-                ((JFrame)this.getParent()).dispose();
+                reiniciarJogo(false);
             }
-            
-//            JOptionPane.showMessageDialog(
-//                    this,
-//                    "O Exército " + pecaAtacada.getExercito().getNome()
-//                    + " não possui movimentos disponíveis. O Exército "
-//                    + peca.getExercito().getNome() + " venceu.",
-//                    "Fim de jogo",
-//                    JOptionPane.INFORMATION_MESSAGE);
         }
 
         return false;
+    }
+    
+    private void reiniciarJogo(){
+        reiniciarJogo(true);
+    }
+    
+    private void reiniciarJogo(boolean reiniciar){
+        if(reiniciar){
+            iniciarJogo();
+            ((JFrame)this.getParent().getParent().getParent().getParent()).repaint();
+        }else{
+            ((JFrame)this.getParent().getParent().getParent().getParent()).dispose();
+        }
     }
 
     private void revelarPeca(Peca pecaOrigem, Peca pecaDestino, int vencedor){
