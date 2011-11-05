@@ -236,5 +236,4 @@ public class MainForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     RegrasForm rf;
     SobreForm sf;
-    NovoJogoRedeForm jr;
 }
