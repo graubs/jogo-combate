@@ -1,0 +1,1 @@
+Jogo desenvolvido em Java, para atender aos anseios dos Mestres do Projeto Integrador da turma de 3º semestre do curso de Análise e Desenvolvimento de Sistemas do Centro Universitário Jorge Amado.
